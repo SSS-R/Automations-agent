@@ -109,14 +109,39 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li');
             li.className = `video-item ${currentVideoId === v.id ? 'active' : ''}`;
             li.innerHTML = `
-                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;">
+                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0;">
                     ${v.title}
                 </span>
                 <span class="clip-badge">${v.total_clips} clips</span>
+                <button class="btn-delete" title="Delete project" data-folder="${v.folder_name}">
+                    <i data-lucide="trash-2"></i>
+                </button>
             `;
+            li.querySelector('.btn-delete').addEventListener('click', (e) => {
+                e.stopPropagation();
+                deleteVideo(v.folder_name, v.title);
+            });
             li.addEventListener('click', () => selectVideo(v.id));
             videoListEl.appendChild(li);
         });
+        lucide.createIcons();
+    }
+
+    async function deleteVideo(folderName, title) {
+        if (!confirm(`Delete "${title}" and all its clips?`)) return;
+        try {
+            const res = await fetch(`/api/videos/${encodeURIComponent(folderName)}`, { method: 'DELETE' });
+            if (res.ok) {
+                showToast(`Deleted "${title}"`);
+                currentVideoId = null;
+                fetchVideos();
+            } else {
+                showToast("Failed to delete");
+            }
+        } catch (err) {
+            console.error(err);
+            showToast("Delete failed");
+        }
     }
 
     function selectVideo(id) {

@@ -137,3 +137,38 @@ async def get_clip_video(folder_name: str, clip_id: str):
         raise HTTPException(status_code=404, detail="Video clip not found")
         
     return FileResponse(video_path, media_type="video/mp4")
+
+@router.delete("/videos/{folder_name}")
+async def delete_video_project(folder_name: str):
+    """Delete a processed video project and all its clips."""
+    import shutil
+    
+    project_path = OUTPUT_DIR / folder_name
+    if not project_path.exists():
+        raise HTTPException(status_code=404, detail="Video project not found")
+    
+    # Remove the output folder with all clips
+    shutil.rmtree(project_path)
+    
+    # Also try to clean up the source video files if they exist
+    # folder_name format is "Title_VideoID", extract video ID
+    parts = folder_name.rsplit("_", 1)
+    if len(parts) == 2:
+        video_id = parts[1]
+        videos_dir = Path("videos")
+        temp_dir = Path("temp")
+        for ext in [".mp4", ".webp", ".info.json", "_summary.json"]:
+            vid_file = videos_dir / f"{video_id}{ext}"
+            if vid_file.exists():
+                vid_file.unlink()
+        # Clean cached audio
+        wav_file = temp_dir / f"{video_id}.wav"
+        if wav_file.exists():
+            wav_file.unlink()
+        # Clean cached transcript
+        cache_dir = temp_dir / "cache"
+        transcript_file = cache_dir / f"{video_id}_transcript.json"
+        if transcript_file.exists():
+            transcript_file.unlink()
+    
+    return {"status": "deleted", "folder": folder_name}

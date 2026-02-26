@@ -8,21 +8,22 @@ CLIPS_DIR.mkdir(exist_ok=True)
 
 def clip_video(input_path: str, output_path: str, start_time: float, end_time: float) -> str:
     """Extract a clip from start_time to end_time without re-encoding."""
-    # Convert seconds to format expected by ffmpeg
     start_str = format_time(start_time)
-    end_str = format_time(end_time)
+    duration = end_time - start_time
     
+    # Use -map 0 to copy ALL streams (video + audio)
     (
         ffmpeg
-        .input(input_path, ss=start_str, to=end_str)
-        .output(output_path, codec='copy')
+        .input(input_path, ss=start_str, t=duration)
+        .output(output_path, codec='copy', map='0')
         .overwrite_output()
         .run(quiet=True)
     )
     return output_path
 
 def crop_vertical(input_path: str, output_path: str) -> str:
-    """Crop horizontal video to 9:16 vertical (center crop) and scale to 1080x1920."""
+    """Crop horizontal video to 9:16 vertical (center crop) and scale to 1080x1920.
+    Preserves audio stream."""
     try:
         probe = ffmpeg.probe(input_path)
         video_stream = next(s for s in probe['streams'] if s['codec_type'] == 'video')
@@ -30,20 +31,22 @@ def crop_vertical(input_path: str, output_path: str) -> str:
         height = int(video_stream['height'])
     except Exception as e:
         print(f"Error probing video {input_path}: {e}")
-        return output_path # fallback
+        return output_path
 
     # Calculate crop dimensions for 9:16 aspect ratio based on height
     new_width = int(height * 9 / 16)
-    x_offset = (width - new_width) // 2 
-    
+    x_offset = (width - new_width) // 2
+
+    # Separate input into video and audio streams
+    inp = ffmpeg.input(input_path)
+    video = inp.video.filter('crop', new_width, height, x_offset, 0).filter('scale', 1080, 1920)
+    audio = inp.audio
+
     (
         ffmpeg
-        .input(input_path)
-        .filter('crop', new_width, height, x_offset, 0)
-        .filter('scale', 1080, 1920)
-        .output(output_path, vcodec='libx264', crf=23, acodec='aac', preset='medium', movflags='faststart')
+        .output(video, audio, output_path, vcodec='libx264', crf=23, acodec='aac', preset='medium', movflags='faststart')
         .overwrite_output()
-        .run(quiet=True) # Mute output to prevent console spam during parallel execution
+        .run(quiet=True)
     )
     return output_path
 
@@ -100,6 +103,6 @@ def process_clip(input_path: str, output_dir: Path, clip_idx: int, start_time: f
         
     return {
         "final_video": final_clip_path,
-        "raw_video": raw_clip_path, # kept in dict for references, though deleted from disk
+        "raw_video": raw_clip_path,
         "srt": srt_path
     }
