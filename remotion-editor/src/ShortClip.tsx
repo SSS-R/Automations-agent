@@ -51,7 +51,7 @@ export const ShortClip: React.FC<ShortClipProps> = ({
         <AbsoluteFill style={{ backgroundColor: 'black' }}>
             {/* Background video — already has blurred background from FFmpeg */}
             <Video
-                src={videoSrc}
+                src={staticFile(videoSrc)}
                 style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             />
 

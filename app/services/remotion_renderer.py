@@ -79,12 +79,20 @@ def render_clip_with_remotion(
     # Build props for Remotion
     duration_frames = get_video_duration_frames(duration_seconds, fps)
     
-    # Video path needs to be a file:// URI for Remotion to access local files
-    video_abs = os.path.abspath(video_path).replace('\\', '/')
-    video_uri = f"file:///{video_abs}"
+    # Video path needs to be inside the Remotion public directory for Chromium to access it
+    # file:// URIs are blocked by Chrome's strict security policies
+    import shutil
+    import uuid
+    
+    public_dir = REMOTION_DIR / "public"
+    public_dir.mkdir(exist_ok=True)
+    temp_filename = f"temp_vid_{uuid.uuid4().hex[:8]}.mp4"
+    temp_video_path = public_dir / temp_filename
+    
+    shutil.copy2(video_path, temp_video_path)
     
     props = {
-        "videoSrc": video_uri,
+        "videoSrc": temp_filename,
         "captionPages": caption_pages,
         "hookText": hook_text,
         "durationInFrames": duration_frames,
@@ -132,10 +140,15 @@ def render_clip_with_remotion(
     
     print(f"✅ Remotion render complete: {output_abs}")
     
-    # Cleanup props file
+    # Cleanup temp files
     try:
         os.remove(props_path)
     except:
         pass
-    
+    try:
+        if os.path.exists(temp_video_path):
+            os.remove(temp_video_path)
+    except Exception as e:
+        print(f"Failed to clean up temp video: {e}")
+        
     return output_path
