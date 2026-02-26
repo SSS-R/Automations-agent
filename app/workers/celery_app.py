@@ -1,5 +1,8 @@
 import os
+from dotenv import load_dotenv
 from celery import Celery
+
+load_dotenv()
 
 # Use local Redis by default
 REDIS_URL = os.environ.get("REDIS_URL", "redis://127.0.0.1:6379/0")
