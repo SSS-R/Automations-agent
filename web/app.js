@@ -13,6 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerStatsEl = document.getElementById('current-video-stats');
     const toastEl = document.getElementById('toast');
 
+    // Phase 3 Elements
+    const processBtn = document.getElementById('process-btn');
+    const urlInput = document.getElementById('video-url-input');
+    const progressContainer = document.getElementById('progress-container');
+    const progressStatus = document.getElementById('progress-status');
+    const progressBarFill = document.getElementById('progress-bar-fill');
+
     // Fetch initial data
     async function fetchVideos() {
         try {
@@ -29,6 +36,71 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Failed to fetch videos:", error);
             showEmptyState("Failed to connect to the backend API.");
         }
+    }
+
+    // Process new video
+    processBtn.addEventListener('click', async () => {
+        const url = urlInput.value.trim();
+        if (!url) return;
+
+        urlInput.disabled = true;
+        processBtn.disabled = true;
+
+        try {
+            const res = await fetch('/api/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url })
+            });
+            const data = await res.json();
+
+            if (data.task_id) {
+                pollProgress(data.task_id);
+            }
+        } catch (error) {
+            console.error(error);
+            showToast("Failed to start processing");
+            resetProcessForm();
+        }
+    });
+
+    function pollProgress(taskId) {
+        progressContainer.classList.remove('hidden');
+        progressStatus.textContent = "Starting Pipeline...";
+        progressBarFill.style.width = '0%';
+
+        const intervalId = setInterval(async () => {
+            try {
+                const res = await fetch(`/api/status/${taskId}`);
+                const data = await res.json();
+
+                progressBarFill.style.width = `${data.progress}%`;
+                progressStatus.textContent = `${data.progress}% - ${data.status}`;
+
+                if (data.state === 'SUCCESS') {
+                    clearInterval(intervalId);
+                    showToast("Pipeline Complete!");
+                    resetProcessForm();
+                    fetchVideos(); // Refresh sidebar with new video
+                } else if (data.state === 'FAILURE' || data.state === 'REVOKED') {
+                    clearInterval(intervalId);
+                    showToast("Pipeline Failed: " + data.status);
+                    resetProcessForm();
+                }
+            } catch (error) {
+                console.error("Polling error:", error);
+            }
+        }, 2000);
+    }
+
+    function resetProcessForm() {
+        urlInput.value = '';
+        urlInput.disabled = false;
+        processBtn.disabled = false;
+        setTimeout(() => {
+            progressContainer.classList.add('hidden');
+            progressBarFill.style.width = '0%';
+        }, 3000); // Hide progress after 3 sec on finish
     }
 
     function renderVideoList() {

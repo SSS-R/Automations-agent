@@ -7,7 +7,7 @@
     --accent: #3b82f6;
     --accent-hover: #2563eb;
     --border: #2e323a;
-    
+
     --brand-yt: #ef4444;
     --brand-tk: #ffffff;
     --brand-ig: #d946ef;
@@ -23,7 +23,8 @@
 body {
     background-color: var(--bg-main);
     color: var(--text-primary);
-    overflow: hidden; /* App container handles scroll */
+    overflow: hidden;
+    /* App container handles scroll */
 }
 
 .app-container {
@@ -88,7 +89,8 @@ body {
     align-items: center;
 }
 
-.video-item:hover, .video-item.active {
+.video-item:hover,
+.video-item.active {
     background-color: var(--bg-card);
     color: var(--text-primary);
 }
@@ -153,6 +155,72 @@ body {
     padding: 0 40px;
     background-color: var(--bg-main);
     border-bottom: 1px solid var(--border);
+    gap: 16px;
+}
+
+.process-form {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    max-width: 400px;
+}
+
+#video-url-input {
+    flex: 1;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+#video-url-input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+}
+
+.progress-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.progress-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#progress-status {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-card);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.3s ease;
 }
 
 .topbar h1 {
@@ -188,7 +256,7 @@ body {
 
 .clip-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 .clip-video-wrapper {
@@ -272,9 +340,17 @@ body {
     background: #2e323a;
 }
 
-.btn.yt:hover { color: var(--brand-yt); }
-.btn.tk:hover { color: var(--brand-tk); }
-.btn.ig:hover { color: var(--brand-ig); }
+.btn.yt:hover {
+    color: var(--brand-yt);
+}
+
+.btn.tk:hover {
+    color: var(--brand-tk);
+}
+
+.btn.ig:hover {
+    color: var(--brand-ig);
+}
 
 
 /* --- Utils --- */

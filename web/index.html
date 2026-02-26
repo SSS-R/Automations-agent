@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +10,17 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
     <div class="app-container">
-        
+
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <i data-lucide="scissors" class="logo-icon"></i>
                 <h2>Auto-Clipper</h2>
             </div>
-            
+
             <div class="sidebar-nav">
                 <h3>Parsed Videos</h3>
                 <ul id="video-list" class="video-list">
@@ -26,7 +28,7 @@
                     <div class="loader-small" id="sidebar-loader"></div>
                 </ul>
             </div>
-            
+
             <div class="sidebar-footer">
                 <a href="https://studio.youtube.com" target="_blank" class="quick-link">
                     <i data-lucide="youtube"></i> YT Studio
@@ -43,15 +45,30 @@
         <!-- Main Content -->
         <main class="main-content">
             <header class="topbar">
+                <div class="process-form">
+                    <input type="text" id="video-url-input"
+                        placeholder="Enter video URL (e.g. YouTube, TikTok, Local)" />
+                    <button class="btn btn-primary" id="process-btn">
+                        <i data-lucide="play"></i> Process
+                    </button>
+                </div>
+                <!-- Progress Container -->
+                <div id="progress-container" class="progress-container hidden">
+                    <span id="progress-status">Processing...</span>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                    </div>
+                </div>
+
                 <h1 id="current-video-title">Select a video to view clips</h1>
                 <div class="topbar-stats" id="current-video-stats"></div>
             </header>
-            
+
             <div class="clips-container" id="clips-grid">
                 <!-- JS injects clips here -->
             </div>
         </main>
-        
+
     </div>
 
     <!-- Toast Notification -->
@@ -59,4 +76,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>

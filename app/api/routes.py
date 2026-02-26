@@ -5,10 +5,54 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
 from typing import List
 
-from .schemas import VideoSessionOut, ClipOut
+from .schemas import VideoSessionOut, ClipOut, ProcessRequest, TaskStatusOut
+from app.workers.tasks import process_video_task
 
 router = APIRouter()
 OUTPUT_DIR = Path("output")
+
+@router.post("/process", response_model=TaskStatusOut)
+async def process_video(request: ProcessRequest):
+    """Submit a video URL to the Celery background worker."""
+    task = process_video_task.delay(request.url)
+    return TaskStatusOut(
+        task_id=task.id,
+        status="Job submitted to background worker",
+        state=task.state,
+        progress=0
+    )
+
+@router.get("/status/{task_id}", response_model=TaskStatusOut)
+async def get_task_status(task_id: str):
+    """Poll Celery for the task status."""
+    task = process_video_task.AsyncResult(task_id)
+    
+    if task.state == 'PENDING':
+        return TaskStatusOut(task_id=task_id, state=task.state, status="Pending...", progress=0)
+    elif task.state == 'PROGRESS':
+        meta = task.info or {}
+        return TaskStatusOut(
+            task_id=task_id,
+            state=task.state,
+            status=meta.get('status', 'Processing...'),
+            progress=meta.get('progress', 0)
+        )
+    elif task.state == 'SUCCESS':
+        return TaskStatusOut(
+            task_id=task_id,
+            state=task.state,
+            status="Complete",
+            progress=100,
+            result=task.result
+        )
+    else:
+        # Failure or revoked
+        return TaskStatusOut(
+            task_id=task_id,
+            state=task.state,
+            status=str(task.info) if task.info else "Failed",
+            progress=0
+        )
 
 @router.get("/videos", response_model=List[VideoSessionOut])
 async def list_videos():

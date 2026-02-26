@@ -1,5 +1,15 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Any
+
+class ProcessRequest(BaseModel):
+    url: str
+
+class TaskStatusOut(BaseModel):
+    task_id: str
+    status: str
+    state: str
+    progress: int
+    result: Optional[Any] = None
 
 class ClipOut(BaseModel):
     id: str
