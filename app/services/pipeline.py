@@ -23,11 +23,20 @@ def orchestrate_pipeline(url: str):
     """
     print(f"🚀 Starting Auto-Clipper Pipeline for: {url}")
     
-    # 1. Download
-    video_meta = download_video(url)
+    # 1. Download or bypass if local file
+    if os.path.exists(url):
+        video_meta = {
+            'id': Path(url).stem,
+            'title': Path(url).stem,
+            'filepath': url
+        }
+        print(f"✅ Using local file: {video_meta['title']}")
+    else:
+        video_meta = download_video(url)
+        print(f"✅ Downloaded: {video_meta['title']}")
+        
     video_id = video_meta['id']
     video_path = video_meta['filepath']
-    print(f"✅ Downloaded: {video_meta['title']}")
     
     # 2. Transcribe
     segments = full_transcribe_pipeline(video_path, video_id)
@@ -43,8 +52,14 @@ def orchestrate_pipeline(url: str):
     print(f"✅ Detected {len(highlights)} potential viral clips.")
     
     # Create output directory for this video
-    video_out_dir = OUTPUT_DIR / f"{video_meta['title']}_{video_id}"
+    video_out_dir = OUTPUT_DIR / f"{video_meta['title'].replace('/', '_').replace(':', '_')}_{video_id}"
     video_out_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Save transcript and highlights
+    with open(video_out_dir / "transcript.json", "w", encoding='utf-8') as f:
+        json.dump(segments, f, indent=2)
+    with open(video_out_dir / "highlights.json", "w", encoding='utf-8') as f:
+        json.dump(highlights, f, indent=2)
     
     # 4 & 5. Process each clip and generate caption
     results = []
@@ -60,10 +75,13 @@ def orchestrate_pipeline(url: str):
         clip_segments = [s for s in segments if s['end'] >= start_sec and s['start'] <= end_sec]
         
         try:
+            clip_dir = video_out_dir / f"clip_{idx:02d}"
+            clip_dir.mkdir(exist_ok=True)
+            
             # Generate FFmpeg outputs
             clip_paths = process_clip(
-                video_id=video_id,
                 input_path=video_path,
+                output_dir=clip_dir,
                 clip_idx=idx,
                 start_time=start_sec,
                 end_time=end_sec,
@@ -74,13 +92,13 @@ def orchestrate_pipeline(url: str):
             clip_transcript_text = " ".join([s['text'] for s in clip_segments])
             caption = generate_caption(clip_transcript_text)
             
-            # Save all data together in output
-            clip_dir = video_out_dir / f"clip_{idx:02d}"
-            clip_dir.mkdir(exist_ok=True)
-            
             # Write caption text
             with open(clip_dir / "caption.txt", "w", encoding='utf-8') as f:
-                f.write(f"--- Meta ---\nHook: {clip.get('hook')}\nReason: {clip.get('reason')}\nViral Score: {clip.get('viral_score')}\n\n--- Caption ---\n{caption}")
+                f.write(caption)
+                
+            # Write clip metadata
+            with open(clip_dir / "metadata.json", "w", encoding='utf-8') as f:
+                json.dump(clip, f, indent=2)
                 
             results.append({
                 "clip_idx": idx,
@@ -99,6 +117,22 @@ def orchestrate_pipeline(url: str):
             "original_video": video_meta,
             "clips": results
         }, f, indent=2)
+        
+    # Generate summary report
+    summary = f"""# Auto-Clipper Run Summary
+## Video: {video_meta['title']}
+- Original URL: {url}
+- Total Highlights Detected: {len(highlights)}
+- Total Clips Successfully Generated: {len(results)}
+
+### Estimated Reach Potential
+Assuming average performance metrics per clip across 3 main platforms (YouTube, TikTok, Instagram):
+- Expected Views: {len(results) * 3000} - {len(results) * 15000} (1k-5k views per platform per clip)
+
+All individual clips and captions have been saved in `{video_out_dir.absolute()}`.
+"""
+    with open(video_out_dir / "summary.md", "w", encoding='utf-8') as f:
+        f.write(summary)
         
     print(f"\n🎉 Pipeline Complete! Outputs saved to: {video_out_dir}")
     return results

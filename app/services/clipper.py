@@ -73,15 +73,12 @@ def generate_srt(segments: list[dict], output_path: str) -> str:
     return output_path
 
 
-def process_clip(video_id: str, input_path: str, clip_idx: int, start_time: float, end_time: float, segments: list[dict] = None) -> dict:
+def process_clip(input_path: str, output_dir: Path, clip_idx: int, start_time: float, end_time: float, segments: list[dict] = None) -> dict:
     """"End to end function to create a ready-to-use 9:16 clip.
     Optional: pass matching segments to generate an SRT file side-by-side."""
-    # Ensure nested clip directory
-    clip_dir = CLIPS_DIR / f"{video_id}" / f"clip_{clip_idx:02d}"
-    clip_dir.mkdir(parents=True, exist_ok=True)
     
-    raw_clip_path = str(clip_dir / f"raw_clip_{clip_idx:02d}.mp4")
-    final_clip_path = str(clip_dir / f"final_clip_{clip_idx:02d}.mp4")
+    raw_clip_path = str(output_dir / f"raw_clip_{clip_idx:02d}.mp4")
+    final_clip_path = str(output_dir / f"final_clip_{clip_idx:02d}.mp4")
     
     print(f"Clipping {start_time} to {end_time}...")
     clip_video(input_path, raw_clip_path, start_time, end_time)
@@ -91,7 +88,7 @@ def process_clip(video_id: str, input_path: str, clip_idx: int, start_time: floa
     
     srt_path = None
     if segments:
-        srt_path = str(clip_dir / "captions.srt")
+        srt_path = str(output_dir / "captions.srt")
         generate_srt(segments, srt_path)
         
     return {
