@@ -1,0 +1,151 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // State
+    let videos = [];
+    let currentVideoId = null;
+
+    // DOM Elements
+    const videoListEl = document.getElementById('video-list');
+    const clipsGridEl = document.getElementById('clips-grid');
+    const headerTitleEl = document.getElementById('current-video-title');
+    const headerStatsEl = document.getElementById('current-video-stats');
+    const toastEl = document.getElementById('toast');
+
+    // Fetch initial data
+    async function fetchVideos() {
+        try {
+            const response = await fetch('/api/videos');
+            videos = await response.json();
+            renderVideoList();
+
+            if (videos.length > 0) {
+                selectVideo(videos[0].id);
+            } else {
+                showEmptyState("No processed videos found yet. Run the pipeline first!");
+            }
+        } catch (error) {
+            console.error("Failed to fetch videos:", error);
+            showEmptyState("Failed to connect to the backend API.");
+        }
+    }
+
+    function renderVideoList() {
+        videoListEl.innerHTML = '';
+        videos.forEach(v => {
+            const li = document.createElement('li');
+            li.className = `video-item ${currentVideoId === v.id ? 'active' : ''}`;
+            li.innerHTML = `
+                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;">
+                    ${v.title}
+                </span>
+                <span class="clip-badge">${v.total_clips} clips</span>
+            `;
+            li.addEventListener('click', () => selectVideo(v.id));
+            videoListEl.appendChild(li);
+        });
+    }
+
+    function selectVideo(id) {
+        currentVideoId = id;
+        renderVideoList(); // Update active state
+
+        const video = videos.find(v => v.id === id);
+        if (!video) return;
+
+        headerTitleEl.textContent = video.title;
+        headerStatsEl.textContent = `${video.total_clips} Clips Generated`;
+
+        renderClips(video.clips);
+    }
+
+    function renderClips(clips) {
+        clipsGridEl.innerHTML = '';
+
+        if (clips.length === 0) {
+            showEmptyState("This video has no clips generated.");
+            return;
+        }
+
+        clips.forEach(clip => {
+            const card = document.createElement('div');
+            card.className = 'clip-card';
+
+            const hookText = clip.metadata?.hook || "No hook provided";
+            const score = clip.metadata?.viral_score || "?";
+
+            card.innerHTML = `
+                <div class="clip-video-wrapper">
+                    <video src="${clip.video_url}" controls preload="metadata" poster=""></video>
+                </div>
+                <div class="clip-info">
+                    <div class="clip-header">
+                        <h3>Clip ${clip.clip_idx}</h3>
+                        <span class="viral-score">Score: ${score}/10</span>
+                    </div>
+                    <div class="clip-hook">
+                        "${hookText}"
+                    </div>
+                    <div class="copy-actions">
+                        <button class="btn yt" onclick="window.copyCaption('${escapeJsString(clip.platform_captions?.youtube || clip.caption)}')">
+                            <i data-lucide="youtube"></i> Copy YouTube
+                        </button>
+                        <button class="btn tk" onclick="window.copyCaption('${escapeJsString(clip.platform_captions?.tiktok || clip.caption)}')">
+                            <i data-lucide="video"></i> Copy TikTok
+                        </button>
+                        <button class="btn ig" onclick="window.copyCaption('${escapeJsString(clip.platform_captions?.instagram || clip.caption)}')">
+                            <i data-lucide="instagram"></i> Copy Instagram
+                        </button>
+                    </div>
+                </div>
+            `;
+            clipsGridEl.appendChild(card);
+        });
+
+        // Re-init icons for dynamic content
+        lucide.createIcons();
+    }
+
+    function showEmptyState(message) {
+        clipsGridEl.innerHTML = `
+            <div class="empty-state">
+                <i data-lucide="video-off"></i>
+                <p>${message}</p>
+            </div>
+        `;
+        lucide.createIcons();
+    }
+
+    // Global copy function
+    window.copyCaption = async (text) => {
+        if (!text || text === 'undefined') {
+            showToast("No caption available");
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(text);
+            showToast("Caption copied!");
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+            showToast("Failed to copy");
+        }
+    };
+
+    function showToast(message) {
+        toastEl.textContent = message;
+        toastEl.classList.remove('hidden');
+        setTimeout(() => {
+            toastEl.classList.add('hidden');
+        }, 3000);
+    }
+
+    function escapeJsString(str) {
+        if (!str) return '';
+        return str.replace(/'/g, "\\'").replace(/\n/g, "\\n").replace(/\r/g, "");
+    }
+
+    // Init
+    fetchVideos();
+});

@@ -1,0 +1,91 @@
+import os
+import json
+from pathlib import Path
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
+from typing import List
+
+from .schemas import VideoSessionOut, ClipOut
+
+router = APIRouter()
+OUTPUT_DIR = Path("output")
+
+@router.get("/videos", response_model=List[VideoSessionOut])
+async def list_videos():
+    """Scan the output directory and return all processed videos and their clips."""
+    if not OUTPUT_DIR.exists():
+        return []
+
+    sessions = []
+    
+    # Iterate over video folders (e.g. "sample_sample")
+    for video_folder in sorted(OUTPUT_DIR.iterdir(), key=os.path.getmtime, reverse=True):
+        if not video_folder.is_dir():
+            continue
+            
+        report_path = video_folder / "pipeline_report.json"
+        if not report_path.exists():
+            continue
+            
+        with open(report_path, "r", encoding="utf-8") as f:
+            try:
+                report_data = json.load(f)
+            except json.JSONDecodeError:
+                continue
+                
+        video_meta = report_data.get("original_video", {})
+        video_title = video_meta.get("title", video_folder.name)
+        video_id = video_meta.get("id", video_folder.name)
+        
+        clips = []
+        for clip_data in report_data.get("clips", []):
+            clip_idx = clip_data.get("clip_idx")
+            clip_dir = video_folder / f"clip_{clip_idx:02d}"
+            
+            # Read caption.txt if exists
+            caption_text = ""
+            platform_captions = {"youtube": "", "tiktok": "", "instagram": ""}
+            caption_path = clip_dir / "caption.txt"
+            if caption_path.exists():
+                with open(caption_path, "r", encoding="utf-8") as f:
+                    caption_text = f.read()
+                    
+                # Basic parsing for platform specific texts
+                parts = caption_text.split("\n\n")
+                current_platform = None
+                for part in parts:
+                    if "[YouTube Shorts]" in part:
+                        platform_captions["youtube"] = part.replace("[YouTube Shorts]", "").strip()
+                    elif "[TikTok]" in part:
+                        platform_captions["tiktok"] = part.replace("[TikTok]", "").strip()
+                    elif "[Instagram Reels]" in part:
+                        platform_captions["instagram"] = part.replace("[Instagram Reels]", "").strip()
+            
+            clips.append(ClipOut(
+                id=f"clip_{clip_idx:02d}",
+                clip_idx=clip_idx,
+                video_url=f"/api/clips/{video_folder.name}/clip_{clip_idx:02d}",
+                caption=caption_text,
+                platform_captions=platform_captions,
+                metadata=clip_data.get("metadata", {})
+            ))
+            
+        sessions.append(VideoSessionOut(
+            id=video_id,
+            title=video_title,
+            folder_name=video_folder.name,
+            total_clips=len(clips),
+            clips=clips
+        ))
+
+    return sessions
+
+@router.get("/clips/{folder_name}/{clip_id}")
+async def get_clip_video(folder_name: str, clip_id: str):
+    """Serve the final MP4 video for a given clip."""
+    video_path = OUTPUT_DIR / folder_name / clip_id / f"final_{clip_id}.mp4"
+    
+    if not video_path.exists():
+        raise HTTPException(status_code=404, detail="Video clip not found")
+        
+    return FileResponse(video_path, media_type="video/mp4")
