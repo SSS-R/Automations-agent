@@ -1,24 +1,23 @@
 import os
 import json
-import google.generativeai as genai
+from google import genai
 from typing import List, Dict
 
-# Assuming API key is set via python-dotenv in main.py
-def setup_gemini():
+# Models to try in order of preference
+MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"]
+
+def get_client():
     api_key = os.environ.get("GOOGLE_API_KEY")
     if not api_key:
         raise ValueError("GOOGLE_API_KEY environment variable not set")
-    genai.configure(api_key=api_key)
-    
-    # Use Gemini 2.0 Flash as it represents the best free tier speed/cost ratio
-    return genai.GenerativeModel('gemini-2.0-flash')
+    return genai.Client(api_key=api_key)
 
 def detect_highlights(formatted_transcript: str) -> List[Dict]:
     """
     Passes a formatted timestamp string to Gemini to detect 3-5 viral highlights.
-    Returns a structured dictionary list.
+    Tries multiple models as fallback if quota is exhausted.
     """
-    model = setup_gemini()
+    client = get_client()
     
     prompt = f"""
 You are an expert viral short-form content editor for platforms like TikTok, YouTube Shorts, and Instagram Reels.
@@ -48,22 +47,29 @@ Transcript:
 {formatted_transcript}
 """
 
-    response = model.generate_content(
-        prompt,
-        generation_config=genai.GenerationConfig(
-            temperature=0.7,
-            response_mime_type="application/json"
-        )
-    )
+    last_error = None
+    for model_name in MODELS:
+        try:
+            print(f"Trying model: {model_name}")
+            response = client.models.generate_content(
+                model=model_name,
+                contents=prompt,
+                config={
+                    "temperature": 0.7,
+                    "response_mime_type": "application/json"
+                }
+            )
+            
+            data = json.loads(response.text)
+            print(f"✅ Success with model: {model_name}")
+            return sorted(data, key=lambda x: x.get('viral_score', 0), reverse=True)
+        except Exception as e:
+            last_error = e
+            print(f"❌ Model {model_name} failed: {e}")
+            continue
     
-    try:
-        data = json.loads(response.text)
-        # Sort by viral score descending to grab the very best first
-        return sorted(data, key=lambda x: x.get('viral_score', 0), reverse=True)
-    except Exception as e:
-        print(f"Failed to parse LLM highlight JSON: {e}")
-        print("Raw response:", response.text)
-        return []
+    # All models failed
+    raise Exception(f"All models failed. Last error: {last_error}")
 
 def timestamp_to_seconds(ts: str) -> float:
     """Convert HH:MM:SS or MM:SS to total float seconds."""
