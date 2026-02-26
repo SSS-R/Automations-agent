@@ -1,20 +1,24 @@
 import os
 import json
 from pathlib import Path
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse
 from typing import List
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 from .schemas import VideoSessionOut, ClipOut, ProcessRequest, TaskStatusOut
 from app.workers.tasks import process_video_task
 
 router = APIRouter()
 OUTPUT_DIR = Path("output")
+limiter = Limiter(key_func=get_remote_address)
 
 @router.post("/process", response_model=TaskStatusOut)
-async def process_video(request: ProcessRequest):
+@limiter.limit("5/minute")
+async def process_video(process_request: ProcessRequest, request: Request):
     """Submit a video URL to the Celery background worker."""
-    task = process_video_task.delay(request.url)
+    task = process_video_task.delay(process_request.url)
     return TaskStatusOut(
         task_id=task.id,
         status="Job submitted to background worker",
