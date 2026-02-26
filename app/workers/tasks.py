@@ -40,12 +40,29 @@ def process_video_task(self, url: str):
             return {"error": f"Failed to download video: {str(e)}"}
         
     video_id = video_meta['id']
+    
+    video_id = video_meta['id']
     video_path = video_meta['filepath']
+    
+    # Pre-calculate output directory so we can check cache
+    video_out_dir = OUTPUT_DIR / f"{video_meta['title'].replace('/', '_').replace(':', '_')}_{video_id}"
+    video_out_dir.mkdir(parents=True, exist_ok=True)
     
     # 2. Transcribe
     self.update_state(state='PROGRESS', meta={'status': 'Transcribing audio...', 'progress': 30})
     try:
-        segments = full_transcribe_pipeline(video_path, video_id)
+        cached_transcript_path = video_out_dir / "transcript.json"
+        
+        if cached_transcript_path.exists():
+            logger.info("♻️ Loading cached transcript...")
+            with open(cached_transcript_path, "r", encoding='utf-8') as f:
+                segments = json.load(f)
+        else:
+            segments = full_transcribe_pipeline(video_path, video_id)
+            # Save new transcript
+            with open(cached_transcript_path, "w", encoding='utf-8') as f:
+                json.dump(segments, f, indent=2)
+                
         formatted_transcript = format_for_llm(segments)
         logger.info(f"✅ Transcribed video. Length: {len(segments)} segments")
     except Exception as e:
@@ -79,19 +96,13 @@ def process_video_task(self, url: str):
     results = []
     total_clips = len(highlights)
     
-    for idx, clip in enumerate(highlights, 1):
-        progress_pct = 50 + int((idx / total_clips) * 45) # Progress 50 -> 95
-        self.update_state(state='PROGRESS', meta={
-            'status': f'Generating Clip {idx}/{total_clips}...', 
-            'progress': progress_pct
-        })
-        logger.info(f"🎬 Processing Clip {idx}...")
-        
-        start_sec = timestamp_to_seconds(clip['start'])
-        end_sec = timestamp_to_seconds(clip['end'])
-        clip_segments = [s for s in segments if s['end'] >= start_sec and s['start'] <= end_sec]
-        
+    def _process_single_clip(idx, clip):
         try:
+            logger.info(f"🎬 Processing Clip {idx}...")
+            start_sec = timestamp_to_seconds(clip['start'])
+            end_sec = timestamp_to_seconds(clip['end'])
+            clip_segments = [s for s in segments if s['end'] >= start_sec and s['start'] <= end_sec]
+            
             clip_dir = video_out_dir / f"clip_{idx:02d}"
             clip_dir.mkdir(exist_ok=True)
             
@@ -117,16 +128,38 @@ def process_video_task(self, url: str):
             with open(clip_dir / "metadata.json", "w", encoding='utf-8') as f:
                 json.dump(clip, f, indent=2)
                 
-            results.append({
+            logger.info(f"✅ Clip {idx} finished.")
+            return {
                 "clip_idx": idx,
                 "paths": clip_paths,
                 "metadata": clip,
                 "caption": caption
-            })
-            logger.info(f"✅ Clip {idx} finished.")
-            
+            }
         except Exception as e:
             logger.error(f"Error processing clip {idx}: {e}")
+            return None
+
+    import concurrent.futures
+    
+    # Process clips concurrently
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+        future_to_idx = {
+            executor.submit(_process_single_clip, idx, clip): idx 
+            for idx, clip in enumerate(highlights, 1)
+        }
+        
+        completed = 0
+        for future in concurrent.futures.as_completed(future_to_idx):
+            res = future.result()
+            if res:
+                results.append(res)
+            
+            completed += 1
+            progress_pct = 50 + int((completed / total_clips) * 45) # Progress 50 -> 95
+            self.update_state(state='PROGRESS', meta={
+                'status': f'Generated Clip {completed}/{total_clips}...', 
+                'progress': progress_pct
+            })
             
     self.update_state(state='PROGRESS', meta={'status': 'Finalizing outputs...', 'progress': 99})
             

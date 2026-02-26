@@ -1,5 +1,6 @@
 import ffmpeg
 import math
+import os
 from pathlib import Path
 
 CLIPS_DIR = Path("clips")
@@ -40,12 +41,11 @@ def crop_vertical(input_path: str, output_path: str) -> str:
         .input(input_path)
         .filter('crop', new_width, height, x_offset, 0)
         .filter('scale', 1080, 1920)
-        .output(output_path, vcodec='libx264', crf=18, acodec='aac', preset='medium', movflags='faststart')
+        .output(output_path, vcodec='libx264', crf=23, acodec='aac', preset='medium', movflags='faststart')
         .overwrite_output()
-        .run(quiet=False) # Keep output for debugging if it fails
+        .run(quiet=True) # Mute output to prevent console spam during parallel execution
     )
     return output_path
-
 
 def format_time(seconds: float) -> str:
     """Convert seconds to HH:MM:SS float format for FFmpeg."""
@@ -91,8 +91,15 @@ def process_clip(input_path: str, output_dir: Path, clip_idx: int, start_time: f
         srt_path = str(output_dir / "captions.srt")
         generate_srt(segments, srt_path)
         
+    # Phase 4.2 Cleanup: Remove the massive uncompressed intermediary clip
+    try:
+        if os.path.exists(raw_clip_path):
+            os.remove(raw_clip_path)
+    except Exception as e:
+        print(f"Failed to clean up {raw_clip_path}: {e}")
+        
     return {
         "final_video": final_clip_path,
-        "raw_video": raw_clip_path,
+        "raw_video": raw_clip_path, # kept in dict for references, though deleted from disk
         "srt": srt_path
     }
