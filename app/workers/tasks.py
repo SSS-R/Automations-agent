@@ -9,6 +9,7 @@ from app.services.transcriber import full_transcribe_pipeline, format_for_llm
 from app.services.highlighter import detect_highlights, timestamp_to_seconds
 from app.services.clipper import process_clip
 from app.services.captioner import generate_caption
+from app.services.remotion_renderer import render_clip_with_remotion
 
 logger = get_task_logger(__name__)
 OUTPUT_DIR = Path("output")
@@ -106,7 +107,7 @@ def process_video_task(self, url: str):
             clip_dir = video_out_dir / f"clip_{idx:02d}"
             clip_dir.mkdir(exist_ok=True)
             
-            # Generate FFmpeg outputs
+            # Step 1: FFmpeg — clip + blurred background fit
             clip_paths = process_clip(
                 input_path=video_path,
                 output_dir=clip_dir,
@@ -116,7 +117,29 @@ def process_video_task(self, url: str):
                 segments=clip_segments
             )
             
-            # Generate Caption
+            # Step 2: Remotion — animated captions + hook text overlay
+            remotion_output = str(clip_dir / f"remotion_clip_{idx:02d}.mp4")
+            hook_text = clip.get('hook', '')
+            captions_json = clip_paths.get('captions_json')
+            
+            if captions_json and os.path.exists(captions_json):
+                try:
+                    duration = end_sec - start_sec
+                    render_clip_with_remotion(
+                        video_path=clip_paths['final_video'],
+                        captions_json_path=captions_json,
+                        hook_text=hook_text,
+                        duration_seconds=duration,
+                        output_path=remotion_output,
+                    )
+                    # Replace the FFmpeg-only clip with the Remotion version
+                    if os.path.exists(remotion_output):
+                        os.replace(remotion_output, clip_paths['final_video'])
+                        logger.info(f"✅ Remotion render complete for Clip {idx}")
+                except Exception as e:
+                    logger.warning(f"⚠️ Remotion render failed for Clip {idx}, using FFmpeg-only version: {e}")
+            
+            # Step 3: Generate social media captions
             clip_transcript_text = " ".join([s['text'] for s in clip_segments])
             caption = generate_caption(clip_transcript_text)
             

@@ -1,0 +1,22 @@
+{
+    "name": "remotion-editor",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "studio": "remotion studio",
+        "render": "remotion render",
+        "build": "remotion render src/index.ts ShortClip"
+    },
+    "dependencies": {
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "remotion": "4.0.429",
+        "@remotion/cli": "4.0.429",
+        "@remotion/player": "4.0.429",
+        "@remotion/captions": "4.0.429"
+    },
+    "devDependencies": {
+        "typescript": "^5.4.0",
+        "@types/react": "^18.3.0"
+    }
+}

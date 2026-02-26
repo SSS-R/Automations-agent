@@ -167,4 +167,5 @@ clips/
 subtitles/
 temp/
 remotion-editor/out/
+remotion-editor/node_modules/
 output/

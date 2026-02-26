@@ -21,30 +21,46 @@ def clip_video(input_path: str, output_path: str, start_time: float, end_time: f
     )
     return output_path
 
-def crop_vertical(input_path: str, output_path: str) -> str:
-    """Crop horizontal video to 9:16 vertical (center crop) and scale to 1080x1920.
-    Preserves audio stream."""
-    try:
-        probe = ffmpeg.probe(input_path)
-        video_stream = next(s for s in probe['streams'] if s['codec_type'] == 'video')
-        width = int(video_stream['width'])
-        height = int(video_stream['height'])
-    except Exception as e:
-        print(f"Error probing video {input_path}: {e}")
-        return output_path
-
-    # Calculate crop dimensions for 9:16 aspect ratio based on height
-    new_width = int(height * 9 / 16)
-    x_offset = (width - new_width) // 2
-
-    # Separate input into video and audio streams
+def fit_vertical_blurred_bg(input_path: str, output_path: str) -> str:
+    """Fit video into 9:16 (1080x1920) with blurred background fill.
+    
+    Instead of center-cropping (which cuts content), this:
+    1. Creates a blurred, zoomed copy as the background
+    2. Scales the original to fit inside 1080x1920 (preserving aspect ratio)
+    3. Overlays the sharp original on top of the blurred background
+    
+    Result: 100% of content visible + premium blurred-fill look.
+    """
     inp = ffmpeg.input(input_path)
-    video = inp.video.filter('crop', new_width, height, x_offset, 0).filter('scale', 1080, 1920)
+    
+    # Background: scale to fill 1080x1920, then blur heavily
+    bg = (
+        inp.video
+        .filter('scale', 1080, 1920, force_original_aspect_ratio='increase')
+        .filter('crop', 1080, 1920)
+        .filter('boxblur', 25, 5)
+        .filter('setsar', 1)
+    )
+    
+    # Foreground: scale to fit inside 1080x1920 (preserving aspect ratio)
+    fg = (
+        inp.video
+        .filter('scale', 1080, 1920, force_original_aspect_ratio='decrease')
+        .filter('setsar', 1)
+    )
+    
+    # Overlay foreground centered on blurred background
+    video_out = ffmpeg.overlay(bg, fg, x='(W-w)/2', y='(H-h)/2')
+    
+    # Get audio stream
     audio = inp.audio
-
+    
     (
         ffmpeg
-        .output(video, audio, output_path, vcodec='libx264', crf=23, acodec='aac', preset='medium', movflags='faststart')
+        .output(video_out, audio, output_path,
+                vcodec='libx264', crf=18, acodec='aac',
+                preset='medium', movflags='faststart',
+                **{'b:a': '192k'})
         .overwrite_output()
         .run(quiet=True)
     )
@@ -58,9 +74,16 @@ def format_time(seconds: float) -> str:
     return f"{hrs:02d}:{mins:02d}:{secs:06.3f}"
 
 
-def generate_srt(segments: list[dict], output_path: str) -> str:
-    """Generate SRT subtitle file from transcript segments."""
+def generate_srt(segments: list[dict], output_path: str, offset: float = 0.0) -> str:
+    """Generate SRT subtitle file from transcript segments.
+    
+    Args:
+        segments: List of transcript segments with start/end/text
+        output_path: Path to write the SRT file
+        offset: Time offset to subtract (so clip starts at 0:00)
+    """
     def format_srt_time(seconds: float) -> str:
+        seconds = max(0, seconds)
         hrs = int(seconds // 3600)
         mins = int((seconds % 3600) // 60)
         secs = int(seconds % 60)
@@ -69,16 +92,58 @@ def generate_srt(segments: list[dict], output_path: str) -> str:
     
     with open(output_path, 'w', encoding='utf-8') as f:
         for i, seg in enumerate(segments, 1):
+            start = seg['start'] - offset
+            end = seg['end'] - offset
+            if end <= 0:
+                continue
+            start = max(0, start)
             f.write(f"{i}\n")
-            f.write(f"{format_srt_time(seg['start'])} --> {format_srt_time(seg['end'])}\n")
+            f.write(f"{format_srt_time(start)} --> {format_srt_time(end)}\n")
             f.write(f"{seg['text'].strip()}\n\n")
     
     return output_path
 
 
+def generate_captions_json(segments: list[dict], output_path: str, offset: float = 0.0) -> str:
+    """Generate captions JSON for Remotion (word-level timestamps).
+    
+    Format: [{"text": "word", "startMs": 1234, "endMs": 5678}, ...]
+    """
+    import json
+    
+    captions = []
+    for seg in segments:
+        start_ms = max(0, int((seg['start'] - offset) * 1000))
+        end_ms = max(0, int((seg['end'] - offset) * 1000))
+        if end_ms <= 0:
+            continue
+        
+        # Split segment text into individual words with estimated timing
+        words = seg['text'].strip().split()
+        if not words:
+            continue
+            
+        segment_duration_ms = end_ms - start_ms
+        word_duration = segment_duration_ms / len(words) if words else 0
+        
+        for j, word in enumerate(words):
+            word_start = start_ms + int(j * word_duration)
+            word_end = start_ms + int((j + 1) * word_duration)
+            captions.append({
+                "text": word + " ",
+                "startMs": word_start,
+                "endMs": word_end,
+            })
+    
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(captions, f, indent=2)
+    
+    return output_path
+
+
 def process_clip(input_path: str, output_dir: Path, clip_idx: int, start_time: float, end_time: float, segments: list[dict] = None) -> dict:
-    """"End to end function to create a ready-to-use 9:16 clip.
-    Optional: pass matching segments to generate an SRT file side-by-side."""
+    """"End to end function to create a ready-to-use 9:16 clip with blurred background.
+    Generates SRT and Remotion captions JSON."""
     
     raw_clip_path = str(output_dir / f"raw_clip_{clip_idx:02d}.mp4")
     final_clip_path = str(output_dir / f"final_clip_{clip_idx:02d}.mp4")
@@ -86,15 +151,18 @@ def process_clip(input_path: str, output_dir: Path, clip_idx: int, start_time: f
     print(f"Clipping {start_time} to {end_time}...")
     clip_video(input_path, raw_clip_path, start_time, end_time)
     
-    print(f"Cropping to 9:16 vertical...")
-    crop_vertical(raw_clip_path, final_clip_path)
+    print(f"Fitting to 9:16 with blurred background...")
+    fit_vertical_blurred_bg(raw_clip_path, final_clip_path)
     
     srt_path = None
+    captions_json_path = None
     if segments:
-        srt_path = str(output_dir / "captions.srt")
-        generate_srt(segments, srt_path)
+        srt_path = str(output_dir / f"captions_{clip_idx:02d}.srt")
+        captions_json_path = str(output_dir / f"captions_{clip_idx:02d}.json")
+        generate_srt(segments, srt_path, offset=start_time)
+        generate_captions_json(segments, captions_json_path, offset=start_time)
         
-    # Phase 4.2 Cleanup: Remove the massive uncompressed intermediary clip
+    # Cleanup: Remove the intermediary clip
     try:
         if os.path.exists(raw_clip_path):
             os.remove(raw_clip_path)
@@ -103,6 +171,6 @@ def process_clip(input_path: str, output_dir: Path, clip_idx: int, start_time: f
         
     return {
         "final_video": final_clip_path,
-        "raw_video": raw_clip_path,
-        "srt": srt_path
+        "srt": srt_path,
+        "captions_json": captions_json_path,
     }
