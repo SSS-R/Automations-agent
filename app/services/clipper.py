@@ -11,11 +11,11 @@ def clip_video(input_path: str, output_path: str, start_time: float, end_time: f
     start_str = format_time(start_time)
     duration = end_time - start_time
     
-    # Use -map 0 to copy ALL streams (video + audio)
+    # Map only video + audio streams (exclude subtitles to avoid duplicates with Remotion captions)
+    inp = ffmpeg.input(input_path, ss=start_str, t=duration)
     (
         ffmpeg
-        .input(input_path, ss=start_str, t=duration)
-        .output(output_path, codec='copy', map='0')
+        .output(inp['v'], inp['a'], output_path, codec='copy')
         .overwrite_output()
         .run(quiet=True)
     )

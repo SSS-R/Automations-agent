@@ -89,7 +89,18 @@ def render_clip_with_remotion(
     temp_filename = f"temp_vid_{uuid.uuid4().hex[:8]}.mp4"
     temp_video_path = public_dir / temp_filename
     
-    shutil.copy2(video_path, temp_video_path)
+    # Strip subtitle streams to prevent Chromium from auto-rendering them
+    # (Remotion provides its own animated captions)
+    try:
+        strip_result = subprocess.run(
+            ['ffmpeg', '-i', video_path, '-c', 'copy', '-sn', '-y', str(temp_video_path)],
+            capture_output=True, text=True, timeout=30
+        )
+        if strip_result.returncode != 0:
+            # Fallback to simple copy if ffmpeg strip fails
+            shutil.copy2(video_path, temp_video_path)
+    except Exception:
+        shutil.copy2(video_path, temp_video_path)
     
     props = {
         "videoSrc": temp_filename,
@@ -130,7 +141,7 @@ def render_clip_with_remotion(
         capture_output=True,
         text=True,
         cwd=str(REMOTION_DIR),
-        timeout=300,  # 5 minute timeout
+        timeout=900,  # 15 minute timeout
         shell=True,   # Required on Windows for npx
     )
     

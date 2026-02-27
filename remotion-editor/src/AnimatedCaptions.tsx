@@ -22,7 +22,7 @@ export const AnimatedCaptions: React.FC<{ pages: CaptionPage[] }> = ({ pages }) 
         <div
             style={{
                 position: 'absolute',
-                bottom: 180,
+                bottom: 400,
                 left: 0,
                 right: 0,
                 textAlign: 'center',

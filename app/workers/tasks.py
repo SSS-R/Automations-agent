@@ -4,7 +4,7 @@ from pathlib import Path
 from celery.utils.log import get_task_logger
 
 from app.workers.celery_app import celery_app
-from app.services.downloader import download_video
+from app.services.downloader import download_video, fetch_existing_transcript
 from app.services.transcriber import full_transcribe_pipeline, format_for_llm
 from app.services.highlighter import detect_highlights, timestamp_to_seconds
 from app.services.clipper import process_clip
@@ -65,7 +65,20 @@ def process_video_task(self, url: str):
             with open(cached_transcript_path, "r", encoding='utf-8') as f:
                 segments = json.load(f)
         else:
-            segments = full_transcribe_pipeline(video_path, video_id)
+            # Tier 1: Try to fetch existing platform subtitles (FREE + INSTANT)
+            existing_sub = None
+            if not os.path.exists(url):  # Only for URLs, not local files
+                self.update_state(state='PROGRESS', meta={'status': 'Checking for existing subtitles...', 'progress': 25})
+                try:
+                    result = fetch_existing_transcript(url)
+                    if result and result.get('status') == 'found':
+                        existing_sub = result['path']
+                        logger.info(f"✅ Found platform subtitles: {existing_sub}")
+                except Exception as e:
+                    logger.warning(f"⚠️ Subtitle fetch failed, will use Whisper: {e}")
+            
+            self.update_state(state='PROGRESS', meta={'status': 'Transcribing audio...' if not existing_sub else 'Parsing platform subtitles...', 'progress': 30})
+            segments = full_transcribe_pipeline(video_path, video_id, existing_sub_path=existing_sub)
             # Save new transcript
             with open(cached_transcript_path, "w", encoding='utf-8') as f:
                 json.dump(segments, f, indent=2)
