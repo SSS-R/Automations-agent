@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showToast("Pipeline Complete!");
                     resetProcessForm();
                     fetchVideos(); // Refresh sidebar with new video
+                    fetchStats();  // Refresh analytics
                 } else if (data.state === 'FAILURE' || data.state === 'REVOKED') {
                     clearInterval(intervalId);
                     showToast("Pipeline Failed: " + data.status);
@@ -243,6 +244,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return str.replace(/'/g, "\\'").replace(/\n/g, "\\n").replace(/\r/g, "");
     }
 
+    // Fetch analytics stats
+    async function fetchStats() {
+        try {
+            const res = await fetch('/api/stats');
+            const stats = await res.json();
+            document.getElementById('stat-total-videos').textContent = stats.total_videos;
+            document.getElementById('stat-total-clips').textContent = stats.total_clips;
+            document.getElementById('stat-today-clips').textContent = stats.today_clips;
+            document.getElementById('stat-avg-score').textContent = stats.avg_viral_score > 0 ? stats.avg_viral_score : '–';
+        } catch (e) {
+            console.error('Failed to fetch stats:', e);
+        }
+    }
+
     // Init
     fetchVideos();
+    fetchStats();
 });

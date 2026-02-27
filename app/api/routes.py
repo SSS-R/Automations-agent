@@ -7,8 +7,9 @@ from typing import List
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
-from .schemas import VideoSessionOut, ClipOut, ProcessRequest, TaskStatusOut
+from .schemas import VideoSessionOut, ClipOut, ProcessRequest, TaskStatusOut, StatsOut
 from app.workers.tasks import process_video_task
+from app.services.analytics import get_stats
 
 router = APIRouter()
 OUTPUT_DIR = Path("output")
@@ -172,3 +173,8 @@ async def delete_video_project(folder_name: str):
             transcript_file.unlink()
     
     return {"status": "deleted", "folder": folder_name}
+
+@router.get("/stats", response_model=StatsOut)
+async def get_pipeline_stats():
+    """Return aggregate analytics stats for the dashboard."""
+    return StatsOut(**get_stats())

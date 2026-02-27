@@ -25,3 +25,13 @@ class VideoSessionOut(BaseModel):
     folder_name: str
     total_clips: int
     clips: List[ClipOut]
+
+class StatsOut(BaseModel):
+    total_videos: int
+    total_clips: int
+    today_videos: int
+    today_clips: int
+    avg_viral_score: float
+    last_processed_title: Optional[str] = None
+    last_processed_at: Optional[str] = None
+

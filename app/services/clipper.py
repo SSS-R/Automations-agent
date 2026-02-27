@@ -107,33 +107,47 @@ def generate_srt(segments: list[dict], output_path: str, offset: float = 0.0) ->
 def generate_captions_json(segments: list[dict], output_path: str, offset: float = 0.0) -> str:
     """Generate captions JSON for Remotion (word-level timestamps).
     
+    Uses real word-level timestamps from faster-whisper when available,
+    falls back to linear estimation when word timestamps are missing.
+    
     Format: [{"text": "word", "startMs": 1234, "endMs": 5678}, ...]
     """
     import json
     
     captions = []
     for seg in segments:
-        start_ms = max(0, int((seg['start'] - offset) * 1000))
-        end_ms = max(0, int((seg['end'] - offset) * 1000))
-        if end_ms <= 0:
+        seg_start_ms = max(0, int((seg['start'] - offset) * 1000))
+        seg_end_ms = max(0, int((seg['end'] - offset) * 1000))
+        if seg_end_ms <= 0:
             continue
         
-        # Split segment text into individual words with estimated timing
-        words = seg['text'].strip().split()
-        if not words:
-            continue
-            
-        segment_duration_ms = end_ms - start_ms
-        word_duration = segment_duration_ms / len(words) if words else 0
-        
-        for j, word in enumerate(words):
-            word_start = start_ms + int(j * word_duration)
-            word_end = start_ms + int((j + 1) * word_duration)
-            captions.append({
-                "text": word + " ",
-                "startMs": word_start,
-                "endMs": word_end,
-            })
+        # Use real word-level timestamps from Whisper if available
+        if seg.get('words') and len(seg['words']) > 0:
+            for w in seg['words']:
+                w_start = max(0, int((w['start'] - offset) * 1000))
+                w_end = max(0, int((w['end'] - offset) * 1000))
+                if w_end <= 0:
+                    continue
+                captions.append({
+                    "text": w['word'] + " ",
+                    "startMs": w_start,
+                    "endMs": w_end,
+                })
+        else:
+            # Fallback: estimate word timing linearly
+            words = seg['text'].strip().split()
+            if not words:
+                continue
+            segment_duration_ms = seg_end_ms - seg_start_ms
+            word_duration = segment_duration_ms / len(words)
+            for j, word in enumerate(words):
+                word_start = seg_start_ms + int(j * word_duration)
+                word_end = seg_start_ms + int((j + 1) * word_duration)
+                captions.append({
+                    "text": word + " ",
+                    "startMs": word_start,
+                    "endMs": word_end,
+                })
     
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(captions, f, indent=2)

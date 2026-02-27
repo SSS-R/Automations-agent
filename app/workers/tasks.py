@@ -10,6 +10,7 @@ from app.services.highlighter import detect_highlights, timestamp_to_seconds
 from app.services.clipper import process_clip
 from app.services.captioner import generate_caption
 from app.services.remotion_renderer import render_clip_with_remotion
+from app.services.analytics import record_pipeline_start, record_pipeline_complete, record_pipeline_failed, record_clip
 
 logger = get_task_logger(__name__)
 OUTPUT_DIR = Path("output")
@@ -41,9 +42,14 @@ def process_video_task(self, url: str):
             return {"error": f"Failed to download video: {str(e)}"}
         
     video_id = video_meta['id']
-    
-    video_id = video_meta['id']
     video_path = video_meta['filepath']
+    
+    # Record analytics
+    run_id = record_pipeline_start(
+        video_url=url,
+        video_title=video_meta.get('title'),
+        video_id=video_id
+    )
     
     # Pre-calculate output directory so we can check cache
     video_out_dir = OUTPUT_DIR / f"{video_meta['title'].replace('/', '_').replace(':', '_')}_{video_id}"
@@ -151,6 +157,16 @@ def process_video_task(self, url: str):
             with open(clip_dir / "metadata.json", "w", encoding='utf-8') as f:
                 json.dump(clip, f, indent=2)
                 
+            # Record clip analytics
+            record_clip(
+                run_id=run_id,
+                clip_idx=idx,
+                viral_score=clip.get('viral_score'),
+                start_time=clip.get('start'),
+                end_time=clip.get('end'),
+                hook=clip.get('hook')
+            )
+            
             logger.info(f"✅ Clip {idx} finished.")
             return {
                 "clip_idx": idx,
@@ -209,6 +225,9 @@ All individual clips and captions have been saved in `{video_out_dir.absolute()}
     with open(video_out_dir / "summary.md", "w", encoding='utf-8') as f:
         f.write(summary)
         
+    # Record analytics completion
+    record_pipeline_complete(run_id, clips_generated=len(results))
+    
     logger.info(f"🎉 Pipeline Complete! Outputs saved to: {video_out_dir}")
     
     return {
