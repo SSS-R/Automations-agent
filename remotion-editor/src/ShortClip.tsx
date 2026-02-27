@@ -11,19 +11,19 @@ import {
 } from 'remotion';
 import { AnimatedCaptions } from './AnimatedCaptions';
 
-interface CaptionToken {
+export interface CaptionToken {
     text: string;
     startMs: number;
     endMs: number;
 }
 
-interface CaptionPage {
+export interface CaptionPage {
     startMs: number;
     endMs: number;
     tokens: CaptionToken[];
 }
 
-interface ShortClipProps {
+export interface ShortClipProps {
     videoSrc: string;
     captionPages: CaptionPage[];
     hookText: string;
