@@ -1,0 +1,22 @@
+{
+    "title": "Why AI Will Change Everything",
+    "hook": "In 10 years, 80% of jobs won't exist.",
+    "hookDurationInFrames": 90,
+    "scenes": [
+        {
+            "text": "AI is replacing jobs faster than you think",
+            "durationInFrames": 120,
+            "visual_keyword": "technology future robot",
+            "emotion": "serious",
+            "asset_file": "temp_vid_3536ffe3.mp4"
+        },
+        {
+            "text": "But here's what no one tells you...",
+            "durationInFrames": 90,
+            "visual_keyword": "person thinking mystery",
+            "emotion": "suspense"
+        }
+    ],
+    "cta": "Follow for more AI insights",
+    "ctaDurationInFrames": 90
+}
