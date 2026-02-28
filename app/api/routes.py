@@ -7,7 +7,7 @@ from typing import List
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
-from .schemas import VideoSessionOut, ClipOut, ProcessRequest, TaskStatusOut, StatsOut
+from .schemas import VideoSessionOut, ClipOut, ProcessRequest, TaskStatusOut, StatsOut, FacelessGenerateRequest
 from app.workers.tasks import process_video_task
 from app.services.analytics import get_stats
 
@@ -26,6 +26,50 @@ async def process_video(process_request: ProcessRequest, request: Request):
         state=task.state,
         progress=0
     )
+
+@router.post("/faceless/generate", response_model=TaskStatusOut)
+@limiter.limit("5/minute")
+async def generate_faceless_video(req: FacelessGenerateRequest, request: Request):
+    """Submit a topic to generate a faceless video via background worker."""
+    from app.workers.tasks import process_faceless_video_task
+    task = process_faceless_video_task.delay(
+        req.topic, 
+        req.tone, 
+        req.duration, 
+        req.template, 
+        req.font_preset, 
+        req.color_palette,
+        req.bgm_file
+    )
+    return TaskStatusOut(
+        task_id=task.id,
+        status="Faceless Job submitted to background worker",
+        state=task.state,
+        progress=0
+    )
+
+@router.post("/faceless/preview")
+async def preview_faceless_video(req: FacelessGenerateRequest):
+    """Return a mock script JSON configured with the requested template for UI preview."""
+    # This skips the API and just returns a ready-to-render Remotion script struct
+    return {
+        "title": f"Preview: {req.topic}",
+        "template": req.template,
+        "font_preset": req.font_preset,
+        "color_palette": req.color_palette,
+        "bgm_file": req.bgm_file,
+        "hook": "This is a preview hook!",
+        "hookDurationInFrames": 90,
+        "scenes": [
+            {
+                "text": "This is the first preview scene. It will show you how the template looks.",
+                "durationInFrames": 120,
+                "asset_file": "temp_vid_3536ffe3.mp4" # uses dummy asset
+            }
+        ],
+        "cta": "Like and subscribe for more!",
+        "ctaDurationInFrames": 90
+    }
 
 @router.get("/status/{task_id}", response_model=TaskStatusOut)
 async def get_task_status(task_id: str):

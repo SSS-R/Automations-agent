@@ -29,5 +29,8 @@ export interface FacelessVideoProps {
     cta: string;
     ctaDurationInFrames: number;
     cta_audio_file?: string;
+    bgm_file?: string;
     template?: 'minimal' | 'bold' | 'tech';
+    font_preset?: 'inter' | 'roboto' | 'outfit' | 'montserrat';
+    color_palette?: 'default' | 'neon' | 'monochrome' | 'sunset' | 'cyberpunk';
 }

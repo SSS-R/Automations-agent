@@ -1,19 +1,26 @@
 import React from 'react';
-import { AbsoluteFill } from 'remotion';
+import { AbsoluteFill, Audio, staticFile } from 'remotion';
 import { FacelessVideoProps } from './types';
 import { MinimalTemplate } from './templates/MinimalTemplate';
+import { BoldTemplate } from './templates/BoldTemplate';
+import { TechTemplate } from './templates/TechTemplate';
 
 export const FacelessVideo: React.FC<FacelessVideoProps> = (props) => {
-    // Determine which template to render based on props
     const templateName = props.template || 'minimal';
 
     return (
         <AbsoluteFill>
             {templateName === 'minimal' && <MinimalTemplate {...props} />}
-            {/* other templates will go here */}
-            {templateName !== 'minimal' && (
+            {templateName === 'bold' && <BoldTemplate {...props} />}
+            {templateName === 'tech' && <TechTemplate {...props} />}
+
+            {props.bgm_file && (
+                <Audio src={staticFile(props.bgm_file)} volume={0.1} />
+            )}
+
+            {!['minimal', 'bold', 'tech'].includes(templateName) && (
                 <div style={{ color: 'white', fontSize: 40, padding: 40 }}>
-                    Template {templateName} not found. Falling back to Minimal.
+                    Template {templateName} not found. Falling back.
                 </div>
             )}
         </AbsoluteFill>

@@ -8,7 +8,7 @@ from .voice_generator import generate_voice
 
 from .audio_sync import process_audio_for_scene
 
-def faceless_pipeline(topic: str, tone: str = "informative", duration: int = 45, template: str = "minimal", skip_api: bool = False):
+def faceless_pipeline(topic: str, tone: str = "informative", duration: int = 45, template: str = "minimal", font_preset: str = "inter", color_palette: str = "default", skip_api: bool = False):
     """
     End-to-end testing of the faceless video generation foundation.
     1. Generate script (GPT-4o)
@@ -54,6 +54,11 @@ def faceless_pipeline(topic: str, tone: str = "informative", duration: int = 45,
             ],
             "cta": "Follow for more mock content!"
         }
+        
+    # Append theming data to the root of the script json to feed into remotion
+    script_data["template"] = template
+    script_data["font_preset"] = font_preset
+    script_data["color_palette"] = color_palette
     
     script_path = os.path.join(output_dir, "script.json")
     with open(script_path, "w") as f:
@@ -169,4 +174,4 @@ if __name__ == "__main__":
     import sys
     topic = sys.argv[1] if len(sys.argv) > 1 else "The future of Artificial Intelligence"
     # To test without consuming API credits:
-    faceless_pipeline(topic, duration=20, skip_api=True)
+    faceless_pipeline(topic, duration=20, template="tech", color_palette="cyberpunk", font_preset="roboto", skip_api=True)

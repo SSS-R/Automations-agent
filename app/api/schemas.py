@@ -4,6 +4,15 @@ from typing import List, Optional, Any
 class ProcessRequest(BaseModel):
     url: str
 
+class FacelessGenerateRequest(BaseModel):
+    topic: str
+    tone: str = "informative"
+    duration: int = 45
+    template: str = "minimal"
+    font_preset: str = "inter"
+    color_palette: str = "default"
+    bgm_file: Optional[str] = None
+
 class TaskStatusOut(BaseModel):
     task_id: str
     status: str

@@ -249,3 +249,74 @@ All individual clips and captions have been saved in `{video_out_dir.absolute()}
         "output_dir": str(video_out_dir),
         "total_clips_generated": len(results)
     }
+
+@celery_app.task(bind=True)
+def process_faceless_video_task(self, topic: str, tone: str = "informative", duration: int = 45, template: str = "minimal", font_preset: str = "inter", color_palette: str = "default", bgm_file: str = None):
+    """
+    Background job for the AI Faceless Video Generator.
+    """
+    logger.info(f"🚀 Starting Faceless Video Pipeline for topic: {topic}")
+    self.update_state(state='PROGRESS', meta={'status': 'Generating script and fetching assets...', 'progress': 10})
+    
+    from app.services.faceless.pipeline import faceless_pipeline
+    
+    try:
+        # Generate the script and assets
+        output_dir = faceless_pipeline(
+            topic=topic,
+            tone=tone,
+            duration=duration,
+            template=template,
+            font_preset=font_preset,
+            color_palette=color_palette,
+            skip_api=False # use real APIs for production worker
+        )
+        
+        self.update_state(state='PROGRESS', meta={'status': 'Rendering video with Remotion...', 'progress': 80})
+        
+        # We need to trigger remotion render
+        script_path = os.path.join(output_dir, "script.json")
+        slug = os.path.basename(output_dir) # e.g. topic-timestamp
+        final_mp4 = os.path.join(output_dir, f"{slug}.mp4")
+        
+        import subprocess
+        # Run standard remotion render, passing the script JSON path as props
+        remotion_dir = str(Path("remotion-editor").absolute())
+        
+        # We have to use the exact component name "FacelessVideo"
+        cmd = [
+            "npx", "remotion", "render", "src/index.ts", "FacelessVideo",
+            str(Path(final_mp4).absolute()),
+            f"--props={str(Path(script_path).absolute())}"
+        ]
+        
+        logger.info(f"Running Remotion: {' '.join(cmd)}")
+        result = subprocess.run(cmd, cwd=remotion_dir, capture_output=True, text=True)
+        
+        if result.returncode != 0:
+            logger.error(f"Remotion Render Failed: {result.stderr}")
+            return {"error": "Video rendering failed."}
+            
+        self.update_state(state='PROGRESS', meta={'status': 'Finalizing outputs...', 'progress': 100})
+        
+        # Clean up temp files if necessary (auto cleanup)
+        audio_dir = os.path.join(output_dir, "audio")
+        import shutil
+        if os.path.exists(audio_dir):
+            shutil.rmtree(audio_dir)
+            
+        if os.path.exists(script_path):
+            os.remove(script_path)
+            
+        logger.info(f"🧹 Cleaned up temporary audio and script files for {topic}")
+        
+        return {
+            "status": "completed",
+            "topic": topic,
+            "output_dir": output_dir,
+            "video_file": final_mp4
+        }
+        
+    except Exception as e:
+        logger.error(f"Faceless pipeline failed: {e}")
+        return {"error": f"Faceless pipeline failed: {str(e)}"}

@@ -77,7 +77,22 @@ def fetch_stock_video(keyword: str, output_path: str) -> str:
         
     video_link = selected_file.get("link")
     
+    # Simple caching based on video ID
+    video_id = video.get("id")
+    cache_dir = os.path.abspath("temp/cache/pexels")
+    os.makedirs(cache_dir, exist_ok=True)
+    
+    cached_path = os.path.join(cache_dir, f"{video_id}.mp4")
     abs_path = os.path.abspath(output_path)
-    download_video(video_link, abs_path)
+    
+    if os.path.exists(cached_path):
+        print(f"♻️  Using cached Pexels video {video_id}")
+        import shutil
+        shutil.copy(cached_path, abs_path)
+    else:
+        # Download and save to cache, then copy
+        download_video(video_link, cached_path)
+        import shutil
+        shutil.copy(cached_path, abs_path)
     
     return abs_path
