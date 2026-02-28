@@ -1,2825 +1,453 @@
 {
-  "title": "Mock Title: The future of Artificial Intelligence",
-  "hook": "This is a mock hook to replace API call.",
+  "title": "Japan's Homogeneity Myth Busted",
+  "hook": "Japan: a perfectly homogeneous society? Think again.",
   "scenes": [
     {
-      "text": "This is the first mock scene.",
-      "visual_keyword": "mock technology",
-      "emotion": "serious",
-      "audio_file": "scene_01.wav",
-      "durationInFrames": 976,
+      "text": "For decades, the world believed Japan was strictly monocultural. A common, yet outdated, myth.",
+      "duration": 5,
+      "visual_keyword": "Traditional Japan, isolated island",
+      "emotion": "Informative",
+      "audio_file": "faceless_assets/controversial-myth-about-japan-talk-any-myths-from-japan-scene_01.wav",
+      "durationInFrames": 254,
       "captionPages": [
         {
           "startMs": 0,
-          "endMs": 1220,
+          "endMs": 1560,
           "tokens": [
             {
-              "text": "That's",
+              "text": "For",
               "startMs": 0,
-              "endMs": 780
+              "endMs": 340
             },
             {
-              "text": "got",
-              "startMs": 780,
-              "endMs": 920
+              "text": "decades,",
+              "startMs": 340,
+              "endMs": 800
             },
             {
-              "text": "to",
-              "startMs": 920,
-              "endMs": 1020
+              "text": "the",
+              "startMs": 1200,
+              "endMs": 1300
             },
             {
-              "text": "go.",
-              "startMs": 1020,
-              "endMs": 1220
-            }
-          ]
-        },
-        {
-          "startMs": 1360,
-          "endMs": 2020,
-          "tokens": [
-            {
-              "text": "That's",
-              "startMs": 1360,
+              "text": "world",
+              "startMs": 1300,
               "endMs": 1560
-            },
+            }
+          ]
+        },
+        {
+          "startMs": 1560,
+          "endMs": 3000,
+          "tokens": [
             {
-              "text": "a",
+              "text": "believed",
               "startMs": 1560,
-              "endMs": 1620
+              "endMs": 1920
             },
             {
-              "text": "good",
-              "startMs": 1620,
-              "endMs": 1740
-            },
-            {
-              "text": "ball.",
-              "startMs": 1740,
-              "endMs": 2020
-            }
-          ]
-        },
-        {
-          "startMs": 2640,
-          "endMs": 3680,
-          "tokens": [
-            {
-              "text": "Oh,",
-              "startMs": 2640,
-              "endMs": 3040
-            },
-            {
-              "text": "how",
-              "startMs": 3040,
-              "endMs": 3440
-            },
-            {
-              "text": "far",
-              "startMs": 3440,
-              "endMs": 3580
-            },
-            {
-              "text": "has",
-              "startMs": 3580,
-              "endMs": 3680
-            }
-          ]
-        },
-        {
-          "startMs": 3680,
-          "endMs": 3980,
-          "tokens": [
-            {
-              "text": "that",
-              "startMs": 3680,
-              "endMs": 3780
-            },
-            {
-              "text": "gone?",
-              "startMs": 3780,
-              "endMs": 3980
-            }
-          ]
-        },
-        {
-          "startMs": 6080,
-          "endMs": 6480,
-          "tokens": [
-            {
-              "text": "275.",
-              "startMs": 6080,
-              "endMs": 6480
-            }
-          ]
-        },
-        {
-          "startMs": 6940,
-          "endMs": 7340,
-          "tokens": [
-            {
-              "text": "275.",
-              "startMs": 6940,
-              "endMs": 7340
-            }
-          ]
-        },
-        {
-          "startMs": 7840,
-          "endMs": 8460,
-          "tokens": [
-            {
-              "text": "You've",
-              "startMs": 7840,
-              "endMs": 8039
-            },
-            {
-              "text": "still",
-              "startMs": 8039,
-              "endMs": 8200
-            },
-            {
-              "text": "got",
-              "startMs": 8200,
-              "endMs": 8360
-            },
-            {
-              "text": "us",
-              "startMs": 8360,
-              "endMs": 8460
-            }
-          ]
-        },
-        {
-          "startMs": 8460,
-          "endMs": 8740,
-          "tokens": [
-            {
-              "text": "covered.",
-              "startMs": 8460,
-              "endMs": 8740
-            }
-          ]
-        },
-        {
-          "startMs": 8880,
-          "endMs": 9660,
-          "tokens": [
-            {
-              "text": "You",
-              "startMs": 8880,
-              "endMs": 8920
-            },
-            {
-              "text": "were",
-              "startMs": 8920,
-              "endMs": 9040
-            },
-            {
-              "text": "294.",
-              "startMs": 9040,
-              "endMs": 9660
-            }
-          ]
-        },
-        {
-          "startMs": 10040,
-          "endMs": 10860,
-          "tokens": [
-            {
-              "text": "You've",
-              "startMs": 10040,
-              "endMs": 10220
-            },
-            {
-              "text": "still",
-              "startMs": 10220,
-              "endMs": 10420
-            },
-            {
-              "text": "got",
-              "startMs": 10420,
-              "endMs": 10680
-            },
-            {
-              "text": "it.",
-              "startMs": 10680,
-              "endMs": 10860
-            }
-          ]
-        },
-        {
-          "startMs": 11040,
-          "endMs": 11400,
-          "tokens": [
-            {
-              "text": "Oh,",
-              "startMs": 11040,
-              "endMs": 11160
-            },
-            {
-              "text": "man.",
-              "startMs": 11160,
-              "endMs": 11400
-            }
-          ]
-        },
-        {
-          "startMs": 11600,
-          "endMs": 12200,
-          "tokens": [
-            {
-              "text": "He",
-              "startMs": 11600,
-              "endMs": 11680
-            },
-            {
-              "text": "knows",
-              "startMs": 11680,
-              "endMs": 11840
-            },
-            {
-              "text": "the",
-              "startMs": 11840,
-              "endMs": 12020
-            },
-            {
-              "text": "middle",
-              "startMs": 12020,
-              "endMs": 12200
-            }
-          ]
-        },
-        {
-          "startMs": 12200,
-          "endMs": 12640,
-          "tokens": [
-            {
-              "text": "of",
-              "startMs": 12200,
-              "endMs": 12360
-            },
-            {
-              "text": "the",
-              "startMs": 12360,
-              "endMs": 12460
-            },
-            {
-              "text": "bat.",
-              "startMs": 12460,
-              "endMs": 12640
-            }
-          ]
-        },
-        {
-          "startMs": 12840,
-          "endMs": 13380,
-          "tokens": [
-            {
-              "text": "It's",
-              "startMs": 12840,
-              "endMs": 13020
-            },
-            {
-              "text": "the",
-              "startMs": 13020,
-              "endMs": 13140
-            },
-            {
-              "text": "middle.",
-              "startMs": 13140,
-              "endMs": 13380
-            }
-          ]
-        },
-        {
-          "startMs": 13700,
-          "endMs": 14380,
-          "tokens": [
-            {
-              "text": "I",
-              "startMs": 13700,
-              "endMs": 13740
-            },
-            {
-              "text": "needed",
-              "startMs": 13740,
-              "endMs": 13960
-            },
-            {
-              "text": "to",
-              "startMs": 13960,
-              "endMs": 14160
-            },
-            {
-              "text": "find",
-              "startMs": 14160,
-              "endMs": 14380
-            }
-          ]
-        },
-        {
-          "startMs": 14380,
-          "endMs": 15420,
-          "tokens": [
-            {
-              "text": "more",
-              "startMs": 14380,
-              "endMs": 14600
-            },
-            {
-              "text": "distance",
-              "startMs": 14600,
-              "endMs": 15000
-            },
-            {
-              "text": "out",
-              "startMs": 15000,
-              "endMs": 15340
-            },
-            {
-              "text": "of",
-              "startMs": 15340,
-              "endMs": 15420
-            }
-          ]
-        },
-        {
-          "startMs": 15420,
-          "endMs": 15820,
-          "tokens": [
-            {
-              "text": "this",
-              "startMs": 15420,
-              "endMs": 15600
-            },
-            {
-              "text": "bat",
-              "startMs": 15600,
-              "endMs": 15820
-            }
-          ]
-        },
-        {
-          "startMs": 15820,
-          "endMs": 16720,
-          "tokens": [
-            {
-              "text": "to",
-              "startMs": 15820,
-              "endMs": 16280
-            },
-            {
-              "text": "hit",
-              "startMs": 16280,
-              "endMs": 16420
-            },
-            {
-              "text": "a",
-              "startMs": 16420,
-              "endMs": 16520
-            },
-            {
-              "text": "home",
-              "startMs": 16520,
-              "endMs": 16720
-            }
-          ]
-        },
-        {
-          "startMs": 16720,
-          "endMs": 16900,
-          "tokens": [
-            {
-              "text": "run.",
-              "startMs": 16720,
-              "endMs": 16900
-            }
-          ]
-        },
-        {
-          "startMs": 17220,
-          "endMs": 18160,
-          "tokens": [
-            {
-              "text": "And",
-              "startMs": 17220,
-              "endMs": 17440
-            },
-            {
-              "text": "my",
-              "startMs": 17440,
-              "endMs": 17580
-            },
-            {
-              "text": "next",
-              "startMs": 17580,
-              "endMs": 17820
-            },
-            {
-              "text": "shot",
-              "startMs": 17820,
-              "endMs": 18160
-            }
-          ]
-        },
-        {
-          "startMs": 18160,
-          "endMs": 19100,
-          "tokens": [
-            {
-              "text": "would",
-              "startMs": 18160,
-              "endMs": 18580
-            },
-            {
-              "text": "be",
-              "startMs": 18580,
-              "endMs": 18740
-            },
-            {
-              "text": "my",
-              "startMs": 18740,
-              "endMs": 18860
-            },
-            {
-              "text": "biggest",
-              "startMs": 18860,
-              "endMs": 19100
-            }
-          ]
-        },
-        {
-          "startMs": 19100,
-          "endMs": 19380,
-          "tokens": [
-            {
-              "text": "yet.",
-              "startMs": 19100,
-              "endMs": 19380
-            }
-          ]
-        },
-        {
-          "startMs": 20120,
-          "endMs": 20740,
-          "tokens": [
-            {
-              "text": "There",
-              "startMs": 20120,
-              "endMs": 20480
-            },
-            {
-              "text": "we",
-              "startMs": 20480,
-              "endMs": 20580
-            },
-            {
-              "text": "are.",
-              "startMs": 20580,
-              "endMs": 20740
-            }
-          ]
-        },
-        {
-          "startMs": 20800,
-          "endMs": 21100,
-          "tokens": [
-            {
-              "text": "That",
-              "startMs": 20800,
-              "endMs": 20880
+              "text": "Japan",
+              "startMs": 1920,
+              "endMs": 2420
             },
             {
               "text": "was",
-              "startMs": 20880,
-              "endMs": 20960
+              "startMs": 2420,
+              "endMs": 2660
             },
             {
-              "text": "a",
-              "startMs": 20960,
-              "endMs": 21040
+              "text": "strictly",
+              "startMs": 2660,
+              "endMs": 3000
+            }
+          ]
+        },
+        {
+          "startMs": 3000,
+          "endMs": 3780,
+          "tokens": [
+            {
+              "text": "monocultural.",
+              "startMs": 3000,
+              "endMs": 3780
+            }
+          ]
+        },
+        {
+          "startMs": 4740,
+          "endMs": 6340,
+          "tokens": [
+            {
+              "text": "A",
+              "startMs": 4740,
+              "endMs": 4960
             },
             {
-              "text": "good",
-              "startMs": 21040,
-              "endMs": 21100
-            }
-          ]
-        },
-        {
-          "startMs": 21100,
-          "endMs": 21320,
-          "tokens": [
-            {
-              "text": "swing.",
-              "startMs": 21100,
-              "endMs": 21320
-            }
-          ]
-        },
-        {
-          "startMs": 21620,
-          "endMs": 21700,
-          "tokens": [
-            {
-              "text": "Go.",
-              "startMs": 21620,
-              "endMs": 21700
-            }
-          ]
-        },
-        {
-          "startMs": 21840,
-          "endMs": 21960,
-          "tokens": [
-            {
-              "text": "Yep.",
-              "startMs": 21840,
-              "endMs": 21960
-            }
-          ]
-        },
-        {
-          "startMs": 22480,
-          "endMs": 22740,
-          "tokens": [
-            {
-              "text": "Go.",
-              "startMs": 22480,
-              "endMs": 22740
-            }
-          ]
-        },
-        {
-          "startMs": 23560,
-          "endMs": 23960,
-          "tokens": [
-            {
-              "text": "Go.",
-              "startMs": 23560,
-              "endMs": 23960
-            }
-          ]
-        },
-        {
-          "startMs": 24780,
-          "endMs": 25500,
-          "tokens": [
-            {
-              "text": "Yes,",
-              "startMs": 24780,
-              "endMs": 25180
+              "text": "common,",
+              "startMs": 4960,
+              "endMs": 5360
             },
             {
-              "text": "sir.",
-              "startMs": 25320,
-              "endMs": 25500
+              "text": "yet",
+              "startMs": 5760,
+              "endMs": 5820
+            },
+            {
+              "text": "outdated,",
+              "startMs": 5820,
+              "endMs": 6340
             }
           ]
         },
         {
-          "startMs": 25820,
-          "endMs": 26220,
+          "startMs": 6760,
+          "endMs": 6920,
           "tokens": [
             {
-              "text": "300.",
-              "startMs": 25820,
-              "endMs": 26220
-            }
-          ]
-        },
-        {
-          "startMs": 26620,
-          "endMs": 27020,
-          "tokens": [
-            {
-              "text": "320.",
-              "startMs": 26620,
-              "endMs": 27020
-            }
-          ]
-        },
-        {
-          "startMs": 27420,
-          "endMs": 27820,
-          "tokens": [
-            {
-              "text": "320.",
-              "startMs": 27420,
-              "endMs": 27820
-            }
-          ]
-        },
-        {
-          "startMs": 28200,
-          "endMs": 28760,
-          "tokens": [
-            {
-              "text": "And",
-              "startMs": 28200,
-              "endMs": 28380
-            },
-            {
-              "text": "you",
-              "startMs": 28380,
-              "endMs": 28480
-            },
-            {
-              "text": "got",
-              "startMs": 28480,
-              "endMs": 28620
-            },
-            {
-              "text": "to",
-              "startMs": 28620,
-              "endMs": 28760
-            }
-          ]
-        },
-        {
-          "startMs": 28760,
-          "endMs": 29520,
-          "tokens": [
-            {
-              "text": "374.",
-              "startMs": 28760,
-              "endMs": 29520
-            }
-          ]
-        },
-        {
-          "startMs": 30040,
-          "endMs": 30400,
-          "tokens": [
-            {
-              "text": "374.",
-              "startMs": 30040,
-              "endMs": 30400
-            }
-          ]
-        },
-        {
-          "startMs": 30840,
-          "endMs": 31500,
-          "tokens": [
-            {
-              "text": "Last",
-              "startMs": 30840,
-              "endMs": 30940
-            },
-            {
-              "text": "two",
-              "startMs": 30940,
-              "endMs": 31180
-            },
-            {
-              "text": "to",
-              "startMs": 31180,
-              "endMs": 31260
-            },
-            {
-              "text": "try",
-              "startMs": 31260,
-              "endMs": 31500
-            }
-          ]
-        },
-        {
-          "startMs": 31500,
-          "endMs": 31980,
-          "tokens": [
-            {
-              "text": "and",
-              "startMs": 31500,
-              "endMs": 31580
-            },
-            {
-              "text": "get",
-              "startMs": 31580,
-              "endMs": 31700
-            },
-            {
-              "text": "374.",
-              "startMs": 31700,
-              "endMs": 31980
+              "text": "myth.",
+              "startMs": 6760,
+              "endMs": 6920
             }
           ]
         }
       ],
-      "asset_file": "scene_01.mp4"
+      "asset_file": "faceless_assets/controversial-myth-about-japan-talk-any-myths-from-japan-scene_01.mp4"
     },
     {
-      "text": "This is the second mock scene.",
-      "visual_keyword": "mock mystery",
-      "emotion": "suspense",
-      "audio_file": "scene_02.wav",
-      "durationInFrames": 976,
+      "text": "But look closer! Japan's actually embracing a growing foreign population, especially in major cities.",
+      "duration": 6,
+      "visual_keyword": "Modern Tokyo, diverse people walking",
+      "emotion": "Surprised",
+      "audio_file": "faceless_assets/controversial-myth-about-japan-talk-any-myths-from-japan-scene_02.wav",
+      "durationInFrames": 251,
       "captionPages": [
         {
           "startMs": 0,
-          "endMs": 1220,
+          "endMs": 2620,
           "tokens": [
             {
-              "text": "That's",
+              "text": "But",
               "startMs": 0,
-              "endMs": 780
+              "endMs": 320
             },
             {
-              "text": "got",
-              "startMs": 780,
-              "endMs": 920
+              "text": "look",
+              "startMs": 320,
+              "endMs": 480
             },
             {
-              "text": "to",
-              "startMs": 920,
-              "endMs": 1020
+              "text": "closer.",
+              "startMs": 480,
+              "endMs": 980
             },
             {
-              "text": "go.",
-              "startMs": 1020,
-              "endMs": 1220
+              "text": "Japan's",
+              "startMs": 2020,
+              "endMs": 2620
             }
           ]
         },
         {
-          "startMs": 1360,
-          "endMs": 2020,
+          "startMs": 2620,
+          "endMs": 3960,
           "tokens": [
             {
-              "text": "That's",
-              "startMs": 1360,
-              "endMs": 1560
+              "text": "actually",
+              "startMs": 2620,
+              "endMs": 2940
+            },
+            {
+              "text": "embracing",
+              "startMs": 2940,
+              "endMs": 3460
             },
             {
               "text": "a",
-              "startMs": 1560,
-              "endMs": 1620
-            },
-            {
-              "text": "good",
-              "startMs": 1620,
-              "endMs": 1740
-            },
-            {
-              "text": "ball.",
-              "startMs": 1740,
-              "endMs": 2020
-            }
-          ]
-        },
-        {
-          "startMs": 2640,
-          "endMs": 3680,
-          "tokens": [
-            {
-              "text": "Oh,",
-              "startMs": 2640,
-              "endMs": 3040
-            },
-            {
-              "text": "how",
-              "startMs": 3040,
-              "endMs": 3440
-            },
-            {
-              "text": "far",
-              "startMs": 3440,
-              "endMs": 3580
-            },
-            {
-              "text": "has",
-              "startMs": 3580,
+              "startMs": 3460,
               "endMs": 3680
-            }
-          ]
-        },
-        {
-          "startMs": 3680,
-          "endMs": 3980,
-          "tokens": [
+            },
             {
-              "text": "that",
+              "text": "growing",
               "startMs": 3680,
-              "endMs": 3780
-            },
-            {
-              "text": "gone?",
-              "startMs": 3780,
-              "endMs": 3980
+              "endMs": 3960
             }
           ]
         },
         {
-          "startMs": 6080,
-          "endMs": 6480,
+          "startMs": 3960,
+          "endMs": 6120,
           "tokens": [
             {
-              "text": "275.",
-              "startMs": 6080,
-              "endMs": 6480
+              "text": "foreign",
+              "startMs": 3960,
+              "endMs": 4340
+            },
+            {
+              "text": "population,",
+              "startMs": 4340,
+              "endMs": 5080
+            },
+            {
+              "text": "especially",
+              "startMs": 5380,
+              "endMs": 5780
+            },
+            {
+              "text": "in",
+              "startMs": 5780,
+              "endMs": 6120
             }
           ]
         },
         {
-          "startMs": 6940,
-          "endMs": 7340,
+          "startMs": 6120,
+          "endMs": 6760,
           "tokens": [
             {
-              "text": "275.",
-              "startMs": 6940,
-              "endMs": 7340
-            }
-          ]
-        },
-        {
-          "startMs": 7840,
-          "endMs": 8460,
-          "tokens": [
-            {
-              "text": "You've",
-              "startMs": 7840,
-              "endMs": 8039
+              "text": "major",
+              "startMs": 6120,
+              "endMs": 6380
             },
             {
-              "text": "still",
-              "startMs": 8039,
-              "endMs": 8200
-            },
-            {
-              "text": "got",
-              "startMs": 8200,
-              "endMs": 8360
-            },
-            {
-              "text": "us",
-              "startMs": 8360,
-              "endMs": 8460
-            }
-          ]
-        },
-        {
-          "startMs": 8460,
-          "endMs": 8740,
-          "tokens": [
-            {
-              "text": "covered.",
-              "startMs": 8460,
-              "endMs": 8740
-            }
-          ]
-        },
-        {
-          "startMs": 8880,
-          "endMs": 9660,
-          "tokens": [
-            {
-              "text": "You",
-              "startMs": 8880,
-              "endMs": 8920
-            },
-            {
-              "text": "were",
-              "startMs": 8920,
-              "endMs": 9040
-            },
-            {
-              "text": "294.",
-              "startMs": 9040,
-              "endMs": 9660
-            }
-          ]
-        },
-        {
-          "startMs": 10040,
-          "endMs": 10860,
-          "tokens": [
-            {
-              "text": "You've",
-              "startMs": 10040,
-              "endMs": 10220
-            },
-            {
-              "text": "still",
-              "startMs": 10220,
-              "endMs": 10420
-            },
-            {
-              "text": "got",
-              "startMs": 10420,
-              "endMs": 10680
-            },
-            {
-              "text": "it.",
-              "startMs": 10680,
-              "endMs": 10860
-            }
-          ]
-        },
-        {
-          "startMs": 11040,
-          "endMs": 11400,
-          "tokens": [
-            {
-              "text": "Oh,",
-              "startMs": 11040,
-              "endMs": 11160
-            },
-            {
-              "text": "man.",
-              "startMs": 11160,
-              "endMs": 11400
-            }
-          ]
-        },
-        {
-          "startMs": 11600,
-          "endMs": 12200,
-          "tokens": [
-            {
-              "text": "He",
-              "startMs": 11600,
-              "endMs": 11680
-            },
-            {
-              "text": "knows",
-              "startMs": 11680,
-              "endMs": 11840
-            },
-            {
-              "text": "the",
-              "startMs": 11840,
-              "endMs": 12020
-            },
-            {
-              "text": "middle",
-              "startMs": 12020,
-              "endMs": 12200
-            }
-          ]
-        },
-        {
-          "startMs": 12200,
-          "endMs": 12640,
-          "tokens": [
-            {
-              "text": "of",
-              "startMs": 12200,
-              "endMs": 12360
-            },
-            {
-              "text": "the",
-              "startMs": 12360,
-              "endMs": 12460
-            },
-            {
-              "text": "bat.",
-              "startMs": 12460,
-              "endMs": 12640
-            }
-          ]
-        },
-        {
-          "startMs": 12840,
-          "endMs": 13380,
-          "tokens": [
-            {
-              "text": "It's",
-              "startMs": 12840,
-              "endMs": 13020
-            },
-            {
-              "text": "the",
-              "startMs": 13020,
-              "endMs": 13140
-            },
-            {
-              "text": "middle.",
-              "startMs": 13140,
-              "endMs": 13380
-            }
-          ]
-        },
-        {
-          "startMs": 13700,
-          "endMs": 14380,
-          "tokens": [
-            {
-              "text": "I",
-              "startMs": 13700,
-              "endMs": 13740
-            },
-            {
-              "text": "needed",
-              "startMs": 13740,
-              "endMs": 13960
-            },
-            {
-              "text": "to",
-              "startMs": 13960,
-              "endMs": 14160
-            },
-            {
-              "text": "find",
-              "startMs": 14160,
-              "endMs": 14380
-            }
-          ]
-        },
-        {
-          "startMs": 14380,
-          "endMs": 15420,
-          "tokens": [
-            {
-              "text": "more",
-              "startMs": 14380,
-              "endMs": 14600
-            },
-            {
-              "text": "distance",
-              "startMs": 14600,
-              "endMs": 15000
-            },
-            {
-              "text": "out",
-              "startMs": 15000,
-              "endMs": 15340
-            },
-            {
-              "text": "of",
-              "startMs": 15340,
-              "endMs": 15420
-            }
-          ]
-        },
-        {
-          "startMs": 15420,
-          "endMs": 15820,
-          "tokens": [
-            {
-              "text": "this",
-              "startMs": 15420,
-              "endMs": 15600
-            },
-            {
-              "text": "bat",
-              "startMs": 15600,
-              "endMs": 15820
-            }
-          ]
-        },
-        {
-          "startMs": 15820,
-          "endMs": 16720,
-          "tokens": [
-            {
-              "text": "to",
-              "startMs": 15820,
-              "endMs": 16280
-            },
-            {
-              "text": "hit",
-              "startMs": 16280,
-              "endMs": 16420
-            },
-            {
-              "text": "a",
-              "startMs": 16420,
-              "endMs": 16520
-            },
-            {
-              "text": "home",
-              "startMs": 16520,
-              "endMs": 16720
-            }
-          ]
-        },
-        {
-          "startMs": 16720,
-          "endMs": 16900,
-          "tokens": [
-            {
-              "text": "run.",
-              "startMs": 16720,
-              "endMs": 16900
-            }
-          ]
-        },
-        {
-          "startMs": 17220,
-          "endMs": 18160,
-          "tokens": [
-            {
-              "text": "And",
-              "startMs": 17220,
-              "endMs": 17440
-            },
-            {
-              "text": "my",
-              "startMs": 17440,
-              "endMs": 17580
-            },
-            {
-              "text": "next",
-              "startMs": 17580,
-              "endMs": 17820
-            },
-            {
-              "text": "shot",
-              "startMs": 17820,
-              "endMs": 18160
-            }
-          ]
-        },
-        {
-          "startMs": 18160,
-          "endMs": 19100,
-          "tokens": [
-            {
-              "text": "would",
-              "startMs": 18160,
-              "endMs": 18580
-            },
-            {
-              "text": "be",
-              "startMs": 18580,
-              "endMs": 18740
-            },
-            {
-              "text": "my",
-              "startMs": 18740,
-              "endMs": 18860
-            },
-            {
-              "text": "biggest",
-              "startMs": 18860,
-              "endMs": 19100
-            }
-          ]
-        },
-        {
-          "startMs": 19100,
-          "endMs": 19380,
-          "tokens": [
-            {
-              "text": "yet.",
-              "startMs": 19100,
-              "endMs": 19380
-            }
-          ]
-        },
-        {
-          "startMs": 20120,
-          "endMs": 20740,
-          "tokens": [
-            {
-              "text": "There",
-              "startMs": 20120,
-              "endMs": 20480
-            },
-            {
-              "text": "we",
-              "startMs": 20480,
-              "endMs": 20580
-            },
-            {
-              "text": "are.",
-              "startMs": 20580,
-              "endMs": 20740
-            }
-          ]
-        },
-        {
-          "startMs": 20800,
-          "endMs": 21100,
-          "tokens": [
-            {
-              "text": "That",
-              "startMs": 20800,
-              "endMs": 20880
-            },
-            {
-              "text": "was",
-              "startMs": 20880,
-              "endMs": 20960
-            },
-            {
-              "text": "a",
-              "startMs": 20960,
-              "endMs": 21040
-            },
-            {
-              "text": "good",
-              "startMs": 21040,
-              "endMs": 21100
-            }
-          ]
-        },
-        {
-          "startMs": 21100,
-          "endMs": 21320,
-          "tokens": [
-            {
-              "text": "swing.",
-              "startMs": 21100,
-              "endMs": 21320
-            }
-          ]
-        },
-        {
-          "startMs": 21620,
-          "endMs": 21700,
-          "tokens": [
-            {
-              "text": "Go.",
-              "startMs": 21620,
-              "endMs": 21700
-            }
-          ]
-        },
-        {
-          "startMs": 21840,
-          "endMs": 21960,
-          "tokens": [
-            {
-              "text": "Yep.",
-              "startMs": 21840,
-              "endMs": 21960
-            }
-          ]
-        },
-        {
-          "startMs": 22480,
-          "endMs": 22740,
-          "tokens": [
-            {
-              "text": "Go.",
-              "startMs": 22480,
-              "endMs": 22740
-            }
-          ]
-        },
-        {
-          "startMs": 23560,
-          "endMs": 23960,
-          "tokens": [
-            {
-              "text": "Go.",
-              "startMs": 23560,
-              "endMs": 23960
-            }
-          ]
-        },
-        {
-          "startMs": 24780,
-          "endMs": 25500,
-          "tokens": [
-            {
-              "text": "Yes,",
-              "startMs": 24780,
-              "endMs": 25180
-            },
-            {
-              "text": "sir.",
-              "startMs": 25320,
-              "endMs": 25500
-            }
-          ]
-        },
-        {
-          "startMs": 25820,
-          "endMs": 26220,
-          "tokens": [
-            {
-              "text": "300.",
-              "startMs": 25820,
-              "endMs": 26220
-            }
-          ]
-        },
-        {
-          "startMs": 26620,
-          "endMs": 27020,
-          "tokens": [
-            {
-              "text": "320.",
-              "startMs": 26620,
-              "endMs": 27020
-            }
-          ]
-        },
-        {
-          "startMs": 27420,
-          "endMs": 27820,
-          "tokens": [
-            {
-              "text": "320.",
-              "startMs": 27420,
-              "endMs": 27820
-            }
-          ]
-        },
-        {
-          "startMs": 28200,
-          "endMs": 28760,
-          "tokens": [
-            {
-              "text": "And",
-              "startMs": 28200,
-              "endMs": 28380
-            },
-            {
-              "text": "you",
-              "startMs": 28380,
-              "endMs": 28480
-            },
-            {
-              "text": "got",
-              "startMs": 28480,
-              "endMs": 28620
-            },
-            {
-              "text": "to",
-              "startMs": 28620,
-              "endMs": 28760
-            }
-          ]
-        },
-        {
-          "startMs": 28760,
-          "endMs": 29520,
-          "tokens": [
-            {
-              "text": "374.",
-              "startMs": 28760,
-              "endMs": 29520
-            }
-          ]
-        },
-        {
-          "startMs": 30040,
-          "endMs": 30400,
-          "tokens": [
-            {
-              "text": "374.",
-              "startMs": 30040,
-              "endMs": 30400
-            }
-          ]
-        },
-        {
-          "startMs": 30840,
-          "endMs": 31500,
-          "tokens": [
-            {
-              "text": "Last",
-              "startMs": 30840,
-              "endMs": 30940
-            },
-            {
-              "text": "two",
-              "startMs": 30940,
-              "endMs": 31180
-            },
-            {
-              "text": "to",
-              "startMs": 31180,
-              "endMs": 31260
-            },
-            {
-              "text": "try",
-              "startMs": 31260,
-              "endMs": 31500
-            }
-          ]
-        },
-        {
-          "startMs": 31500,
-          "endMs": 31980,
-          "tokens": [
-            {
-              "text": "and",
-              "startMs": 31500,
-              "endMs": 31580
-            },
-            {
-              "text": "get",
-              "startMs": 31580,
-              "endMs": 31700
-            },
-            {
-              "text": "374.",
-              "startMs": 31700,
-              "endMs": 31980
+              "text": "cities.",
+              "startMs": 6380,
+              "endMs": 6760
             }
           ]
         }
       ],
-      "asset_file": "scene_02.mp4"
+      "asset_file": "faceless_assets/controversial-myth-about-japan-talk-any-myths-from-japan-scene_02.mp4"
+    },
+    {
+      "text": "These new communities are shaping its future, adding vibrant new layers to its culture.",
+      "duration": 6,
+      "visual_keyword": "Diverse people interacting, fusion food",
+      "emotion": "Positive",
+      "audio_file": "faceless_assets/controversial-myth-about-japan-talk-any-myths-from-japan-scene_03.wav",
+      "durationInFrames": 186,
+      "captionPages": [
+        {
+          "startMs": 0,
+          "endMs": 1380,
+          "tokens": [
+            {
+              "text": "These",
+              "startMs": 0,
+              "endMs": 380
+            },
+            {
+              "text": "new",
+              "startMs": 380,
+              "endMs": 620
+            },
+            {
+              "text": "communities",
+              "startMs": 620,
+              "endMs": 1100
+            },
+            {
+              "text": "are",
+              "startMs": 1100,
+              "endMs": 1380
+            }
+          ]
+        },
+        {
+          "startMs": 1380,
+          "endMs": 2920,
+          "tokens": [
+            {
+              "text": "shaping",
+              "startMs": 1380,
+              "endMs": 1720
+            },
+            {
+              "text": "its",
+              "startMs": 1720,
+              "endMs": 1960
+            },
+            {
+              "text": "future,",
+              "startMs": 1960,
+              "endMs": 2320
+            },
+            {
+              "text": "adding",
+              "startMs": 2680,
+              "endMs": 2920
+            }
+          ]
+        },
+        {
+          "startMs": 2920,
+          "endMs": 4180,
+          "tokens": [
+            {
+              "text": "vibrant",
+              "startMs": 2920,
+              "endMs": 3340
+            },
+            {
+              "text": "new",
+              "startMs": 3340,
+              "endMs": 3600
+            },
+            {
+              "text": "layers",
+              "startMs": 3600,
+              "endMs": 3940
+            },
+            {
+              "text": "to",
+              "startMs": 3940,
+              "endMs": 4180
+            }
+          ]
+        },
+        {
+          "startMs": 4180,
+          "endMs": 4620,
+          "tokens": [
+            {
+              "text": "its",
+              "startMs": 4180,
+              "endMs": 4320
+            },
+            {
+              "text": "culture.",
+              "startMs": 4320,
+              "endMs": 4620
+            }
+          ]
+        }
+      ],
+      "asset_file": "faceless_assets/controversial-myth-about-japan-talk-any-myths-from-japan-scene_03.mp4"
     }
   ],
-  "cta": "Follow for more mock content!",
-  "hook_audio_file": "hook.wav",
-  "hookDurationInFrames": 976,
+  "cta": "What other myths should we bust? Follow for more!",
+  "template": "tech",
+  "font_preset": "roboto",
+  "color_palette": "cyberpunk",
+  "hook_audio_file": "faceless_assets/controversial-myth-about-japan-talk-any-myths-from-japan-hook.wav",
+  "hookDurationInFrames": 176,
   "hookCaptionPages": [
     {
       "startMs": 0,
-      "endMs": 1220,
+      "endMs": 1940,
       "tokens": [
         {
-          "text": "That's",
+          "text": "Japan,",
           "startMs": 0,
-          "endMs": 780
-        },
-        {
-          "text": "got",
-          "startMs": 780,
-          "endMs": 920
-        },
-        {
-          "text": "to",
-          "startMs": 920,
-          "endMs": 1020
-        },
-        {
-          "text": "go.",
-          "startMs": 1020,
-          "endMs": 1220
-        }
-      ]
-    },
-    {
-      "startMs": 1360,
-      "endMs": 2020,
-      "tokens": [
-        {
-          "text": "That's",
-          "startMs": 1360,
-          "endMs": 1560
+          "endMs": 560
         },
         {
           "text": "a",
-          "startMs": 1560,
-          "endMs": 1620
+          "startMs": 960,
+          "endMs": 1060
         },
         {
-          "text": "good",
-          "startMs": 1620,
-          "endMs": 1740
+          "text": "perfectly",
+          "startMs": 1060,
+          "endMs": 1420
         },
         {
-          "text": "ball.",
-          "startMs": 1740,
-          "endMs": 2020
+          "text": "homogeneous",
+          "startMs": 1420,
+          "endMs": 1940
         }
       ]
     },
     {
-      "startMs": 2640,
-      "endMs": 3680,
+      "startMs": 1940,
+      "endMs": 2740,
       "tokens": [
         {
-          "text": "Oh,",
-          "startMs": 2640,
-          "endMs": 3040
-        },
-        {
-          "text": "how",
-          "startMs": 3040,
-          "endMs": 3440
-        },
-        {
-          "text": "far",
-          "startMs": 3440,
-          "endMs": 3580
-        },
-        {
-          "text": "has",
-          "startMs": 3580,
-          "endMs": 3680
+          "text": "society.",
+          "startMs": 1940,
+          "endMs": 2740
         }
       ]
     },
     {
       "startMs": 3680,
-      "endMs": 3980,
+      "endMs": 4340,
       "tokens": [
         {
-          "text": "that",
+          "text": "Think",
           "startMs": 3680,
-          "endMs": 3780
+          "endMs": 4000
         },
         {
-          "text": "gone?",
-          "startMs": 3780,
-          "endMs": 3980
-        }
-      ]
-    },
-    {
-      "startMs": 6080,
-      "endMs": 6480,
-      "tokens": [
-        {
-          "text": "275.",
-          "startMs": 6080,
-          "endMs": 6480
-        }
-      ]
-    },
-    {
-      "startMs": 6940,
-      "endMs": 7340,
-      "tokens": [
-        {
-          "text": "275.",
-          "startMs": 6940,
-          "endMs": 7340
-        }
-      ]
-    },
-    {
-      "startMs": 7840,
-      "endMs": 8460,
-      "tokens": [
-        {
-          "text": "You've",
-          "startMs": 7840,
-          "endMs": 8039
-        },
-        {
-          "text": "still",
-          "startMs": 8039,
-          "endMs": 8200
-        },
-        {
-          "text": "got",
-          "startMs": 8200,
-          "endMs": 8360
-        },
-        {
-          "text": "us",
-          "startMs": 8360,
-          "endMs": 8460
-        }
-      ]
-    },
-    {
-      "startMs": 8460,
-      "endMs": 8740,
-      "tokens": [
-        {
-          "text": "covered.",
-          "startMs": 8460,
-          "endMs": 8740
-        }
-      ]
-    },
-    {
-      "startMs": 8880,
-      "endMs": 9660,
-      "tokens": [
-        {
-          "text": "You",
-          "startMs": 8880,
-          "endMs": 8920
-        },
-        {
-          "text": "were",
-          "startMs": 8920,
-          "endMs": 9040
-        },
-        {
-          "text": "294.",
-          "startMs": 9040,
-          "endMs": 9660
-        }
-      ]
-    },
-    {
-      "startMs": 10040,
-      "endMs": 10860,
-      "tokens": [
-        {
-          "text": "You've",
-          "startMs": 10040,
-          "endMs": 10220
-        },
-        {
-          "text": "still",
-          "startMs": 10220,
-          "endMs": 10420
-        },
-        {
-          "text": "got",
-          "startMs": 10420,
-          "endMs": 10680
-        },
-        {
-          "text": "it.",
-          "startMs": 10680,
-          "endMs": 10860
-        }
-      ]
-    },
-    {
-      "startMs": 11040,
-      "endMs": 11400,
-      "tokens": [
-        {
-          "text": "Oh,",
-          "startMs": 11040,
-          "endMs": 11160
-        },
-        {
-          "text": "man.",
-          "startMs": 11160,
-          "endMs": 11400
-        }
-      ]
-    },
-    {
-      "startMs": 11600,
-      "endMs": 12200,
-      "tokens": [
-        {
-          "text": "He",
-          "startMs": 11600,
-          "endMs": 11680
-        },
-        {
-          "text": "knows",
-          "startMs": 11680,
-          "endMs": 11840
-        },
-        {
-          "text": "the",
-          "startMs": 11840,
-          "endMs": 12020
-        },
-        {
-          "text": "middle",
-          "startMs": 12020,
-          "endMs": 12200
-        }
-      ]
-    },
-    {
-      "startMs": 12200,
-      "endMs": 12640,
-      "tokens": [
-        {
-          "text": "of",
-          "startMs": 12200,
-          "endMs": 12360
-        },
-        {
-          "text": "the",
-          "startMs": 12360,
-          "endMs": 12460
-        },
-        {
-          "text": "bat.",
-          "startMs": 12460,
-          "endMs": 12640
-        }
-      ]
-    },
-    {
-      "startMs": 12840,
-      "endMs": 13380,
-      "tokens": [
-        {
-          "text": "It's",
-          "startMs": 12840,
-          "endMs": 13020
-        },
-        {
-          "text": "the",
-          "startMs": 13020,
-          "endMs": 13140
-        },
-        {
-          "text": "middle.",
-          "startMs": 13140,
-          "endMs": 13380
-        }
-      ]
-    },
-    {
-      "startMs": 13700,
-      "endMs": 14380,
-      "tokens": [
-        {
-          "text": "I",
-          "startMs": 13700,
-          "endMs": 13740
-        },
-        {
-          "text": "needed",
-          "startMs": 13740,
-          "endMs": 13960
-        },
-        {
-          "text": "to",
-          "startMs": 13960,
-          "endMs": 14160
-        },
-        {
-          "text": "find",
-          "startMs": 14160,
-          "endMs": 14380
-        }
-      ]
-    },
-    {
-      "startMs": 14380,
-      "endMs": 15420,
-      "tokens": [
-        {
-          "text": "more",
-          "startMs": 14380,
-          "endMs": 14600
-        },
-        {
-          "text": "distance",
-          "startMs": 14600,
-          "endMs": 15000
-        },
-        {
-          "text": "out",
-          "startMs": 15000,
-          "endMs": 15340
-        },
-        {
-          "text": "of",
-          "startMs": 15340,
-          "endMs": 15420
-        }
-      ]
-    },
-    {
-      "startMs": 15420,
-      "endMs": 15820,
-      "tokens": [
-        {
-          "text": "this",
-          "startMs": 15420,
-          "endMs": 15600
-        },
-        {
-          "text": "bat",
-          "startMs": 15600,
-          "endMs": 15820
-        }
-      ]
-    },
-    {
-      "startMs": 15820,
-      "endMs": 16720,
-      "tokens": [
-        {
-          "text": "to",
-          "startMs": 15820,
-          "endMs": 16280
-        },
-        {
-          "text": "hit",
-          "startMs": 16280,
-          "endMs": 16420
-        },
-        {
-          "text": "a",
-          "startMs": 16420,
-          "endMs": 16520
-        },
-        {
-          "text": "home",
-          "startMs": 16520,
-          "endMs": 16720
-        }
-      ]
-    },
-    {
-      "startMs": 16720,
-      "endMs": 16900,
-      "tokens": [
-        {
-          "text": "run.",
-          "startMs": 16720,
-          "endMs": 16900
-        }
-      ]
-    },
-    {
-      "startMs": 17220,
-      "endMs": 18160,
-      "tokens": [
-        {
-          "text": "And",
-          "startMs": 17220,
-          "endMs": 17440
-        },
-        {
-          "text": "my",
-          "startMs": 17440,
-          "endMs": 17580
-        },
-        {
-          "text": "next",
-          "startMs": 17580,
-          "endMs": 17820
-        },
-        {
-          "text": "shot",
-          "startMs": 17820,
-          "endMs": 18160
-        }
-      ]
-    },
-    {
-      "startMs": 18160,
-      "endMs": 19100,
-      "tokens": [
-        {
-          "text": "would",
-          "startMs": 18160,
-          "endMs": 18580
-        },
-        {
-          "text": "be",
-          "startMs": 18580,
-          "endMs": 18740
-        },
-        {
-          "text": "my",
-          "startMs": 18740,
-          "endMs": 18860
-        },
-        {
-          "text": "biggest",
-          "startMs": 18860,
-          "endMs": 19100
-        }
-      ]
-    },
-    {
-      "startMs": 19100,
-      "endMs": 19380,
-      "tokens": [
-        {
-          "text": "yet.",
-          "startMs": 19100,
-          "endMs": 19380
-        }
-      ]
-    },
-    {
-      "startMs": 20120,
-      "endMs": 20740,
-      "tokens": [
-        {
-          "text": "There",
-          "startMs": 20120,
-          "endMs": 20480
-        },
-        {
-          "text": "we",
-          "startMs": 20480,
-          "endMs": 20580
-        },
-        {
-          "text": "are.",
-          "startMs": 20580,
-          "endMs": 20740
-        }
-      ]
-    },
-    {
-      "startMs": 20800,
-      "endMs": 21100,
-      "tokens": [
-        {
-          "text": "That",
-          "startMs": 20800,
-          "endMs": 20880
-        },
-        {
-          "text": "was",
-          "startMs": 20880,
-          "endMs": 20960
-        },
-        {
-          "text": "a",
-          "startMs": 20960,
-          "endMs": 21040
-        },
-        {
-          "text": "good",
-          "startMs": 21040,
-          "endMs": 21100
-        }
-      ]
-    },
-    {
-      "startMs": 21100,
-      "endMs": 21320,
-      "tokens": [
-        {
-          "text": "swing.",
-          "startMs": 21100,
-          "endMs": 21320
-        }
-      ]
-    },
-    {
-      "startMs": 21620,
-      "endMs": 21700,
-      "tokens": [
-        {
-          "text": "Go.",
-          "startMs": 21620,
-          "endMs": 21700
-        }
-      ]
-    },
-    {
-      "startMs": 21840,
-      "endMs": 21960,
-      "tokens": [
-        {
-          "text": "Yep.",
-          "startMs": 21840,
-          "endMs": 21960
-        }
-      ]
-    },
-    {
-      "startMs": 22480,
-      "endMs": 22740,
-      "tokens": [
-        {
-          "text": "Go.",
-          "startMs": 22480,
-          "endMs": 22740
-        }
-      ]
-    },
-    {
-      "startMs": 23560,
-      "endMs": 23960,
-      "tokens": [
-        {
-          "text": "Go.",
-          "startMs": 23560,
-          "endMs": 23960
-        }
-      ]
-    },
-    {
-      "startMs": 24780,
-      "endMs": 25500,
-      "tokens": [
-        {
-          "text": "Yes,",
-          "startMs": 24780,
-          "endMs": 25180
-        },
-        {
-          "text": "sir.",
-          "startMs": 25320,
-          "endMs": 25500
-        }
-      ]
-    },
-    {
-      "startMs": 25820,
-      "endMs": 26220,
-      "tokens": [
-        {
-          "text": "300.",
-          "startMs": 25820,
-          "endMs": 26220
-        }
-      ]
-    },
-    {
-      "startMs": 26620,
-      "endMs": 27020,
-      "tokens": [
-        {
-          "text": "320.",
-          "startMs": 26620,
-          "endMs": 27020
-        }
-      ]
-    },
-    {
-      "startMs": 27420,
-      "endMs": 27820,
-      "tokens": [
-        {
-          "text": "320.",
-          "startMs": 27420,
-          "endMs": 27820
-        }
-      ]
-    },
-    {
-      "startMs": 28200,
-      "endMs": 28760,
-      "tokens": [
-        {
-          "text": "And",
-          "startMs": 28200,
-          "endMs": 28380
-        },
-        {
-          "text": "you",
-          "startMs": 28380,
-          "endMs": 28480
-        },
-        {
-          "text": "got",
-          "startMs": 28480,
-          "endMs": 28620
-        },
-        {
-          "text": "to",
-          "startMs": 28620,
-          "endMs": 28760
-        }
-      ]
-    },
-    {
-      "startMs": 28760,
-      "endMs": 29520,
-      "tokens": [
-        {
-          "text": "374.",
-          "startMs": 28760,
-          "endMs": 29520
-        }
-      ]
-    },
-    {
-      "startMs": 30040,
-      "endMs": 30400,
-      "tokens": [
-        {
-          "text": "374.",
-          "startMs": 30040,
-          "endMs": 30400
-        }
-      ]
-    },
-    {
-      "startMs": 30840,
-      "endMs": 31500,
-      "tokens": [
-        {
-          "text": "Last",
-          "startMs": 30840,
-          "endMs": 30940
-        },
-        {
-          "text": "two",
-          "startMs": 30940,
-          "endMs": 31180
-        },
-        {
-          "text": "to",
-          "startMs": 31180,
-          "endMs": 31260
-        },
-        {
-          "text": "try",
-          "startMs": 31260,
-          "endMs": 31500
-        }
-      ]
-    },
-    {
-      "startMs": 31500,
-      "endMs": 31980,
-      "tokens": [
-        {
-          "text": "and",
-          "startMs": 31500,
-          "endMs": 31580
-        },
-        {
-          "text": "get",
-          "startMs": 31580,
-          "endMs": 31700
-        },
-        {
-          "text": "374.",
-          "startMs": 31700,
-          "endMs": 31980
+          "text": "again.",
+          "startMs": 4000,
+          "endMs": 4340
         }
       ]
     }
   ],
-  "cta_audio_file": "cta.wav",
-  "ctaDurationInFrames": 976,
+  "cta_audio_file": "faceless_assets/controversial-myth-about-japan-talk-any-myths-from-japan-cta.wav",
+  "ctaDurationInFrames": 150,
   "ctaCaptionPages": [
     {
       "startMs": 0,
-      "endMs": 1220,
+      "endMs": 1060,
       "tokens": [
         {
-          "text": "That's",
+          "text": "What",
           "startMs": 0,
-          "endMs": 780
+          "endMs": 320
         },
         {
-          "text": "got",
-          "startMs": 780,
-          "endMs": 920
+          "text": "other",
+          "startMs": 320,
+          "endMs": 540
         },
         {
-          "text": "to",
-          "startMs": 920,
-          "endMs": 1020
+          "text": "myths",
+          "startMs": 540,
+          "endMs": 840
         },
         {
-          "text": "go.",
-          "startMs": 1020,
-          "endMs": 1220
+          "text": "should",
+          "startMs": 840,
+          "endMs": 1060
         }
       ]
     },
     {
-      "startMs": 1360,
-      "endMs": 2020,
+      "startMs": 1060,
+      "endMs": 1560,
       "tokens": [
-        {
-          "text": "That's",
-          "startMs": 1360,
-          "endMs": 1560
-        },
-        {
-          "text": "a",
-          "startMs": 1560,
-          "endMs": 1620
-        },
-        {
-          "text": "good",
-          "startMs": 1620,
-          "endMs": 1740
-        },
-        {
-          "text": "ball.",
-          "startMs": 1740,
-          "endMs": 2020
-        }
-      ]
-    },
-    {
-      "startMs": 2640,
-      "endMs": 3680,
-      "tokens": [
-        {
-          "text": "Oh,",
-          "startMs": 2640,
-          "endMs": 3040
-        },
-        {
-          "text": "how",
-          "startMs": 3040,
-          "endMs": 3440
-        },
-        {
-          "text": "far",
-          "startMs": 3440,
-          "endMs": 3580
-        },
-        {
-          "text": "has",
-          "startMs": 3580,
-          "endMs": 3680
-        }
-      ]
-    },
-    {
-      "startMs": 3680,
-      "endMs": 3980,
-      "tokens": [
-        {
-          "text": "that",
-          "startMs": 3680,
-          "endMs": 3780
-        },
-        {
-          "text": "gone?",
-          "startMs": 3780,
-          "endMs": 3980
-        }
-      ]
-    },
-    {
-      "startMs": 6080,
-      "endMs": 6480,
-      "tokens": [
-        {
-          "text": "275.",
-          "startMs": 6080,
-          "endMs": 6480
-        }
-      ]
-    },
-    {
-      "startMs": 6940,
-      "endMs": 7340,
-      "tokens": [
-        {
-          "text": "275.",
-          "startMs": 6940,
-          "endMs": 7340
-        }
-      ]
-    },
-    {
-      "startMs": 7840,
-      "endMs": 8460,
-      "tokens": [
-        {
-          "text": "You've",
-          "startMs": 7840,
-          "endMs": 8039
-        },
-        {
-          "text": "still",
-          "startMs": 8039,
-          "endMs": 8200
-        },
-        {
-          "text": "got",
-          "startMs": 8200,
-          "endMs": 8360
-        },
-        {
-          "text": "us",
-          "startMs": 8360,
-          "endMs": 8460
-        }
-      ]
-    },
-    {
-      "startMs": 8460,
-      "endMs": 8740,
-      "tokens": [
-        {
-          "text": "covered.",
-          "startMs": 8460,
-          "endMs": 8740
-        }
-      ]
-    },
-    {
-      "startMs": 8880,
-      "endMs": 9660,
-      "tokens": [
-        {
-          "text": "You",
-          "startMs": 8880,
-          "endMs": 8920
-        },
-        {
-          "text": "were",
-          "startMs": 8920,
-          "endMs": 9040
-        },
-        {
-          "text": "294.",
-          "startMs": 9040,
-          "endMs": 9660
-        }
-      ]
-    },
-    {
-      "startMs": 10040,
-      "endMs": 10860,
-      "tokens": [
-        {
-          "text": "You've",
-          "startMs": 10040,
-          "endMs": 10220
-        },
-        {
-          "text": "still",
-          "startMs": 10220,
-          "endMs": 10420
-        },
-        {
-          "text": "got",
-          "startMs": 10420,
-          "endMs": 10680
-        },
-        {
-          "text": "it.",
-          "startMs": 10680,
-          "endMs": 10860
-        }
-      ]
-    },
-    {
-      "startMs": 11040,
-      "endMs": 11400,
-      "tokens": [
-        {
-          "text": "Oh,",
-          "startMs": 11040,
-          "endMs": 11160
-        },
-        {
-          "text": "man.",
-          "startMs": 11160,
-          "endMs": 11400
-        }
-      ]
-    },
-    {
-      "startMs": 11600,
-      "endMs": 12200,
-      "tokens": [
-        {
-          "text": "He",
-          "startMs": 11600,
-          "endMs": 11680
-        },
-        {
-          "text": "knows",
-          "startMs": 11680,
-          "endMs": 11840
-        },
-        {
-          "text": "the",
-          "startMs": 11840,
-          "endMs": 12020
-        },
-        {
-          "text": "middle",
-          "startMs": 12020,
-          "endMs": 12200
-        }
-      ]
-    },
-    {
-      "startMs": 12200,
-      "endMs": 12640,
-      "tokens": [
-        {
-          "text": "of",
-          "startMs": 12200,
-          "endMs": 12360
-        },
-        {
-          "text": "the",
-          "startMs": 12360,
-          "endMs": 12460
-        },
-        {
-          "text": "bat.",
-          "startMs": 12460,
-          "endMs": 12640
-        }
-      ]
-    },
-    {
-      "startMs": 12840,
-      "endMs": 13380,
-      "tokens": [
-        {
-          "text": "It's",
-          "startMs": 12840,
-          "endMs": 13020
-        },
-        {
-          "text": "the",
-          "startMs": 13020,
-          "endMs": 13140
-        },
-        {
-          "text": "middle.",
-          "startMs": 13140,
-          "endMs": 13380
-        }
-      ]
-    },
-    {
-      "startMs": 13700,
-      "endMs": 14380,
-      "tokens": [
-        {
-          "text": "I",
-          "startMs": 13700,
-          "endMs": 13740
-        },
-        {
-          "text": "needed",
-          "startMs": 13740,
-          "endMs": 13960
-        },
-        {
-          "text": "to",
-          "startMs": 13960,
-          "endMs": 14160
-        },
-        {
-          "text": "find",
-          "startMs": 14160,
-          "endMs": 14380
-        }
-      ]
-    },
-    {
-      "startMs": 14380,
-      "endMs": 15420,
-      "tokens": [
-        {
-          "text": "more",
-          "startMs": 14380,
-          "endMs": 14600
-        },
-        {
-          "text": "distance",
-          "startMs": 14600,
-          "endMs": 15000
-        },
-        {
-          "text": "out",
-          "startMs": 15000,
-          "endMs": 15340
-        },
-        {
-          "text": "of",
-          "startMs": 15340,
-          "endMs": 15420
-        }
-      ]
-    },
-    {
-      "startMs": 15420,
-      "endMs": 15820,
-      "tokens": [
-        {
-          "text": "this",
-          "startMs": 15420,
-          "endMs": 15600
-        },
-        {
-          "text": "bat",
-          "startMs": 15600,
-          "endMs": 15820
-        }
-      ]
-    },
-    {
-      "startMs": 15820,
-      "endMs": 16720,
-      "tokens": [
-        {
-          "text": "to",
-          "startMs": 15820,
-          "endMs": 16280
-        },
-        {
-          "text": "hit",
-          "startMs": 16280,
-          "endMs": 16420
-        },
-        {
-          "text": "a",
-          "startMs": 16420,
-          "endMs": 16520
-        },
-        {
-          "text": "home",
-          "startMs": 16520,
-          "endMs": 16720
-        }
-      ]
-    },
-    {
-      "startMs": 16720,
-      "endMs": 16900,
-      "tokens": [
-        {
-          "text": "run.",
-          "startMs": 16720,
-          "endMs": 16900
-        }
-      ]
-    },
-    {
-      "startMs": 17220,
-      "endMs": 18160,
-      "tokens": [
-        {
-          "text": "And",
-          "startMs": 17220,
-          "endMs": 17440
-        },
-        {
-          "text": "my",
-          "startMs": 17440,
-          "endMs": 17580
-        },
-        {
-          "text": "next",
-          "startMs": 17580,
-          "endMs": 17820
-        },
-        {
-          "text": "shot",
-          "startMs": 17820,
-          "endMs": 18160
-        }
-      ]
-    },
-    {
-      "startMs": 18160,
-      "endMs": 19100,
-      "tokens": [
-        {
-          "text": "would",
-          "startMs": 18160,
-          "endMs": 18580
-        },
-        {
-          "text": "be",
-          "startMs": 18580,
-          "endMs": 18740
-        },
-        {
-          "text": "my",
-          "startMs": 18740,
-          "endMs": 18860
-        },
-        {
-          "text": "biggest",
-          "startMs": 18860,
-          "endMs": 19100
-        }
-      ]
-    },
-    {
-      "startMs": 19100,
-      "endMs": 19380,
-      "tokens": [
-        {
-          "text": "yet.",
-          "startMs": 19100,
-          "endMs": 19380
-        }
-      ]
-    },
-    {
-      "startMs": 20120,
-      "endMs": 20740,
-      "tokens": [
-        {
-          "text": "There",
-          "startMs": 20120,
-          "endMs": 20480
-        },
         {
           "text": "we",
-          "startMs": 20480,
-          "endMs": 20580
+          "startMs": 1060,
+          "endMs": 1200
         },
         {
-          "text": "are.",
-          "startMs": 20580,
-          "endMs": 20740
+          "text": "bust?",
+          "startMs": 1200,
+          "endMs": 1560
         }
       ]
     },
     {
-      "startMs": 20800,
-      "endMs": 21100,
+      "startMs": 2620,
+      "endMs": 3440,
       "tokens": [
         {
-          "text": "That",
-          "startMs": 20800,
-          "endMs": 20880
+          "text": "Follow",
+          "startMs": 2620,
+          "endMs": 2940
         },
         {
-          "text": "was",
-          "startMs": 20880,
-          "endMs": 20960
+          "text": "for",
+          "startMs": 2940,
+          "endMs": 3200
         },
         {
-          "text": "a",
-          "startMs": 20960,
-          "endMs": 21040
-        },
-        {
-          "text": "good",
-          "startMs": 21040,
-          "endMs": 21100
-        }
-      ]
-    },
-    {
-      "startMs": 21100,
-      "endMs": 21320,
-      "tokens": [
-        {
-          "text": "swing.",
-          "startMs": 21100,
-          "endMs": 21320
-        }
-      ]
-    },
-    {
-      "startMs": 21620,
-      "endMs": 21700,
-      "tokens": [
-        {
-          "text": "Go.",
-          "startMs": 21620,
-          "endMs": 21700
-        }
-      ]
-    },
-    {
-      "startMs": 21840,
-      "endMs": 21960,
-      "tokens": [
-        {
-          "text": "Yep.",
-          "startMs": 21840,
-          "endMs": 21960
-        }
-      ]
-    },
-    {
-      "startMs": 22480,
-      "endMs": 22740,
-      "tokens": [
-        {
-          "text": "Go.",
-          "startMs": 22480,
-          "endMs": 22740
-        }
-      ]
-    },
-    {
-      "startMs": 23560,
-      "endMs": 23960,
-      "tokens": [
-        {
-          "text": "Go.",
-          "startMs": 23560,
-          "endMs": 23960
-        }
-      ]
-    },
-    {
-      "startMs": 24780,
-      "endMs": 25500,
-      "tokens": [
-        {
-          "text": "Yes,",
-          "startMs": 24780,
-          "endMs": 25180
-        },
-        {
-          "text": "sir.",
-          "startMs": 25320,
-          "endMs": 25500
-        }
-      ]
-    },
-    {
-      "startMs": 25820,
-      "endMs": 26220,
-      "tokens": [
-        {
-          "text": "300.",
-          "startMs": 25820,
-          "endMs": 26220
-        }
-      ]
-    },
-    {
-      "startMs": 26620,
-      "endMs": 27020,
-      "tokens": [
-        {
-          "text": "320.",
-          "startMs": 26620,
-          "endMs": 27020
-        }
-      ]
-    },
-    {
-      "startMs": 27420,
-      "endMs": 27820,
-      "tokens": [
-        {
-          "text": "320.",
-          "startMs": 27420,
-          "endMs": 27820
-        }
-      ]
-    },
-    {
-      "startMs": 28200,
-      "endMs": 28760,
-      "tokens": [
-        {
-          "text": "And",
-          "startMs": 28200,
-          "endMs": 28380
-        },
-        {
-          "text": "you",
-          "startMs": 28380,
-          "endMs": 28480
-        },
-        {
-          "text": "got",
-          "startMs": 28480,
-          "endMs": 28620
-        },
-        {
-          "text": "to",
-          "startMs": 28620,
-          "endMs": 28760
-        }
-      ]
-    },
-    {
-      "startMs": 28760,
-      "endMs": 29520,
-      "tokens": [
-        {
-          "text": "374.",
-          "startMs": 28760,
-          "endMs": 29520
-        }
-      ]
-    },
-    {
-      "startMs": 30040,
-      "endMs": 30400,
-      "tokens": [
-        {
-          "text": "374.",
-          "startMs": 30040,
-          "endMs": 30400
-        }
-      ]
-    },
-    {
-      "startMs": 30840,
-      "endMs": 31500,
-      "tokens": [
-        {
-          "text": "Last",
-          "startMs": 30840,
-          "endMs": 30940
-        },
-        {
-          "text": "two",
-          "startMs": 30940,
-          "endMs": 31180
-        },
-        {
-          "text": "to",
-          "startMs": 31180,
-          "endMs": 31260
-        },
-        {
-          "text": "try",
-          "startMs": 31260,
-          "endMs": 31500
-        }
-      ]
-    },
-    {
-      "startMs": 31500,
-      "endMs": 31980,
-      "tokens": [
-        {
-          "text": "and",
-          "startMs": 31500,
-          "endMs": 31580
-        },
-        {
-          "text": "get",
-          "startMs": 31580,
-          "endMs": 31700
-        },
-        {
-          "text": "374.",
-          "startMs": 31700,
-          "endMs": 31980
+          "text": "more.",
+          "startMs": 3200,
+          "endMs": 3440
         }
       ]
     }

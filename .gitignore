@@ -170,3 +170,4 @@ remotion-editor/out/
 remotion-editor/node_modules/
 remotion-editor/public/temp_vid_*.mp4
 output/
+remotion-editor/public/
