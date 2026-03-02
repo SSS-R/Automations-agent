@@ -251,7 +251,7 @@ All individual clips and captions have been saved in `{video_out_dir.absolute()}
     }
 
 @celery_app.task(bind=True)
-def process_faceless_video_task(self, topic: str, tone: str = "informative", duration: int = 45, template: str = "minimal", font_preset: str = "inter", color_palette: str = "default", bgm_file: str = None):
+def process_faceless_video_task(self, topic: str, tone: str = "informative", duration: int = 45, template: str = "minimal", font_preset: str = "inter", color_palette: str = "default", bgm_file: str = None, audience: str = None, goal: str = None, hook_style: str = None):
     """
     Background job for the AI Faceless Video Generator.
     """
@@ -269,7 +269,10 @@ def process_faceless_video_task(self, topic: str, tone: str = "informative", dur
             template=template,
             font_preset=font_preset,
             color_palette=color_palette,
-            skip_api=False # use real APIs for production worker
+            skip_api=False, # use real APIs for production worker
+            audience=audience,
+            goal=goal,
+            hook_style=hook_style
         )
         
         self.update_state(state='PROGRESS', meta={'status': 'Rendering video with Remotion...', 'progress': 80})

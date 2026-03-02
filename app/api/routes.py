@@ -39,7 +39,10 @@ async def generate_faceless_video(req: FacelessGenerateRequest, request: Request
         req.template, 
         req.font_preset, 
         req.color_palette,
-        req.bgm_file
+        req.bgm_file,
+        req.audience,
+        req.goal,
+        req.hook_style
     )
     return TaskStatusOut(
         task_id=task.id,

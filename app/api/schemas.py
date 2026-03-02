@@ -12,6 +12,9 @@ class FacelessGenerateRequest(BaseModel):
     font_preset: str = "inter"
     color_palette: str = "default"
     bgm_file: Optional[str] = None
+    audience: Optional[str] = None
+    goal: Optional[str] = None
+    hook_style: Optional[str] = None
 
 class TaskStatusOut(BaseModel):
     task_id: str

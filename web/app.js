@@ -262,3 +262,151 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchVideos();
     fetchStats();
 });
+
+// ─── Tab Switching ────────────────────────────────────────────────────────────
+function switchTab(tab) {
+    const tabs = ['clipper', 'faceless'];
+    tabs.forEach(t => {
+        document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
+        document.getElementById(`view-${t}`).classList.toggle('hidden', t !== tab);
+        document.getElementById(`panel-${t}`).classList.toggle('hidden', t !== tab);
+    });
+    lucide.createIcons();
+}
+
+// ─── Hook Chip Selection ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.hook-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('.hook-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+        });
+    });
+});
+
+// ─── Faceless Generator ───────────────────────────────────────────────────────
+let facelessPollInterval = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    const generateBtn = document.getElementById('generate-btn');
+    if (generateBtn) {
+        generateBtn.addEventListener('click', generateFacelessVideo);
+    }
+});
+
+async function generateFacelessVideo() {
+    const topic = document.getElementById('f-topic').value.trim();
+    if (!topic) {
+        showFacelessState('error');
+        document.getElementById('error-detail-text').textContent = 'Please enter a topic first.';
+        return;
+    }
+
+    const tone = document.getElementById('f-tone').value;
+    const duration = parseInt(document.getElementById('f-duration').value);
+    const audience = document.getElementById('f-audience').value.trim() || null;
+    const goal = document.getElementById('f-goal').value.trim() || null;
+    const template = document.getElementById('f-template').value;
+    const font_preset = document.getElementById('f-font').value;
+    const color_palette = document.getElementById('f-palette').value;
+    const activeChip = document.querySelector('.hook-chip.active');
+    const hook_style = activeChip ? (activeChip.dataset.hook || null) : null;
+
+    // Lock UI
+    document.getElementById('generate-btn').disabled = true;
+    showFacelessState('generating');
+    setGenStep('step-script', 'active');
+
+    try {
+        const res = await fetch('/api/faceless/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ topic, tone, duration, audience, goal, hook_style, template, font_preset, color_palette })
+        });
+        const data = await res.json();
+
+        if (!data.task_id) {
+            throw new Error(data.detail || 'Could not start generation');
+        }
+
+        pollFacelessProgress(data.task_id, topic);
+    } catch (err) {
+        showFacelessState('error');
+        document.getElementById('error-detail-text').textContent = err.message;
+        document.getElementById('generate-btn').disabled = false;
+    }
+}
+
+function pollFacelessProgress(taskId, topic) {
+    if (facelessPollInterval) clearInterval(facelessPollInterval);
+
+    facelessPollInterval = setInterval(async () => {
+        try {
+            const res = await fetch(`/api/status/${taskId}`);
+            const data = await res.json();
+
+            const pct = data.progress || 0;
+            document.getElementById('gen-progress-fill').style.width = `${pct}%`;
+            document.getElementById('gen-progress-pct').textContent = `${pct}%`;
+            document.getElementById('gen-status-text').textContent = data.status || 'Processing...';
+
+            // Update step indicators based on progress
+            if (pct >= 10 && pct < 50) {
+                setGenStep('step-script', 'active');
+            } else if (pct >= 50 && pct < 70) {
+                setGenStep('step-script', 'done');
+                setGenStep('step-assets', 'active');
+            } else if (pct >= 70 && pct < 80) {
+                setGenStep('step-assets', 'done');
+                setGenStep('step-voice', 'active');
+            } else if (pct >= 80) {
+                setGenStep('step-voice', 'done');
+                setGenStep('step-render', 'active');
+            }
+
+            if (data.state === 'SUCCESS') {
+                clearInterval(facelessPollInterval);
+                setGenStep('step-render', 'done');
+                setTimeout(() => {
+                    showFacelessState('done');
+                    document.getElementById('done-topic-label').textContent = topic;
+                    const outputDir = data.result?.output_dir || '';
+                    document.getElementById('done-open-folder').href = `file:///${outputDir.replace(/\\/g, '/')}`;
+                    document.getElementById('generate-btn').disabled = false;
+                }, 800);
+            } else if (data.state === 'FAILURE') {
+                clearInterval(facelessPollInterval);
+                showFacelessState('error');
+                document.getElementById('error-detail-text').textContent = data.status || 'An unknown error occurred.';
+                document.getElementById('generate-btn').disabled = false;
+            }
+        } catch (err) {
+            console.error('Poll error:', err);
+        }
+    }, 3000);
+}
+
+function showFacelessState(state) {
+    ['idle', 'generating', 'done', 'error'].forEach(s => {
+        document.getElementById(`output-${s}`).classList.toggle('hidden', s !== state);
+    });
+    lucide.createIcons();
+}
+
+function setGenStep(stepId, status) {
+    const el = document.getElementById(stepId);
+    if (!el) return;
+    el.classList.remove('active', 'done');
+    if (status) el.classList.add(status);
+}
+
+window.resetFacelessForm = function () {
+    showFacelessState('idle');
+    document.getElementById('generate-btn').disabled = false;
+    if (facelessPollInterval) clearInterval(facelessPollInterval);
+    // Reset step indicators
+    ['step-script', 'step-assets', 'step-voice', 'step-render'].forEach(id => setGenStep(id, ''));
+    document.getElementById('gen-progress-fill').style.width = '0%';
+    document.getElementById('gen-progress-pct').textContent = '0%';
+};
+

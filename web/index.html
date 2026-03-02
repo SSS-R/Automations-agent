@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto-Clipper Dashboard</title>
+    <title>AI Video Studio</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
@@ -17,37 +17,63 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <i data-lucide="scissors" class="logo-icon"></i>
-                <h2>Auto-Clipper</h2>
+                <i data-lucide="clapperboard" class="logo-icon"></i>
+                <h2>AI Studio</h2>
             </div>
 
-            <div class="sidebar-nav">
-                <h3>Parsed Videos</h3>
-                <ul id="video-list" class="video-list">
-                    <!-- JS injects here -->
-                    <div class="loader-small" id="sidebar-loader"></div>
-                </ul>
+            <!-- Tab Nav -->
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab active" id="tab-clipper" onclick="switchTab('clipper')">
+                    <i data-lucide="scissors"></i>
+                    Auto-Clipper
+                </button>
+                <button class="sidebar-tab" id="tab-faceless" onclick="switchTab('faceless')">
+                    <i data-lucide="sparkles"></i>
+                    Faceless Creator
+                </button>
             </div>
 
-            <div class="sidebar-stats" id="sidebar-stats">
-                <h3>📊 Stats</h3>
-                <div class="stat-grid">
-                    <div class="stat-item">
-                        <span class="stat-value" id="stat-total-videos">–</span>
-                        <span class="stat-label">Videos</span>
+            <!-- Clipper Side Panel -->
+            <div class="sidebar-panel" id="panel-clipper">
+                <div class="sidebar-nav">
+                    <h3>Parsed Videos</h3>
+                    <ul id="video-list" class="video-list">
+                        <div class="loader-small" id="sidebar-loader"></div>
+                    </ul>
+                </div>
+
+                <div class="sidebar-stats" id="sidebar-stats">
+                    <h3>📊 Stats</h3>
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <span class="stat-value" id="stat-total-videos">–</span>
+                            <span class="stat-label">Videos</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="stat-total-clips">–</span>
+                            <span class="stat-label">Clips</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="stat-today-clips">–</span>
+                            <span class="stat-label">Today</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="stat-avg-score">–</span>
+                            <span class="stat-label">Avg Score</span>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-value" id="stat-total-clips">–</span>
-                        <span class="stat-label">Clips</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-value" id="stat-today-clips">–</span>
-                        <span class="stat-label">Today</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-value" id="stat-avg-score">–</span>
-                        <span class="stat-label">Avg Score</span>
-                    </div>
+                </div>
+            </div>
+
+            <!-- Faceless Side Panel -->
+            <div class="sidebar-panel hidden" id="panel-faceless">
+                <div class="sidebar-nav">
+                    <h3>Generated Videos</h3>
+                    <ul id="faceless-video-list" class="video-list">
+                        <li class="video-item" style="color: var(--text-secondary); font-size:12px; padding: 12px;">
+                            Generated videos appear here after completion.
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -66,37 +92,245 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <header class="topbar">
-                <div class="process-form">
-                    <input type="text" id="video-url-input"
-                        placeholder="Enter video URL (e.g. YouTube, TikTok, Local)" />
-                    <button class="btn btn-primary" id="process-btn">
-                        <i data-lucide="play"></i> Process
-                    </button>
-                </div>
-                <!-- Progress Container -->
-                <div id="progress-container" class="progress-container hidden">
-                    <span id="progress-status">Processing...</span>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+
+            <!-- ====== CLIPPER VIEW ====== -->
+            <div id="view-clipper">
+                <header class="topbar">
+                    <div class="process-form">
+                        <input type="text" id="video-url-input"
+                            placeholder="Enter video URL (e.g. YouTube, TikTok, Local)" />
+                        <button class="btn btn-primary" id="process-btn">
+                            <i data-lucide="play"></i> Process
+                        </button>
                     </div>
+                    <div id="progress-container" class="progress-container hidden">
+                        <span id="progress-status">Processing...</span>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="compliance-disclaimer" style="font-size: 0.75rem; color: #a1a1aa; margin-top: 8px;">
+                        <i data-lucide="shield-alert"
+                            style="width: 12px; height: 12px; display: inline-block; vertical-align: middle;"></i>
+                        <span style="vertical-align: middle;">By using this tool, you confirm you have the rights or
+                            licensing to process and distribute this video content.</span>
+                    </div>
+
+                    <h1 id="current-video-title">Select a video to view clips</h1>
+                    <div class="topbar-stats" id="current-video-stats"></div>
+                </header>
+
+                <div class="clips-container" id="clips-grid">
+                    <!-- JS injects clips here -->
                 </div>
-
-                <!-- Phase 5 Compliance Disclaimer -->
-                <div class="compliance-disclaimer" style="font-size: 0.75rem; color: #a1a1aa; margin-top: 8px;">
-                    <i data-lucide="shield-alert"
-                        style="width: 12px; height: 12px; display: inline-block; vertical-align: middle;"></i>
-                    <span style="vertical-align: middle;">By using this tool, you confirm you have the rights or
-                        licensing to process and distribute this video content.</span>
-                </div>
-
-                <h1 id="current-video-title">Select a video to view clips</h1>
-                <div class="topbar-stats" id="current-video-stats"></div>
-            </header>
-
-            <div class="clips-container" id="clips-grid">
-                <!-- JS injects clips here -->
             </div>
+
+            <!-- ====== FACELESS CREATOR VIEW ====== -->
+            <div id="view-faceless" class="hidden">
+                <header class="faceless-header">
+                    <div class="faceless-header-title">
+                        <i data-lucide="sparkles" class="header-icon"></i>
+                        <div>
+                            <h1>Faceless Video Creator</h1>
+                            <p>Generate AI-scripted, stock-footage videos in minutes</p>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="faceless-layout">
+
+                    <!-- Form Panel -->
+                    <div class="faceless-form-panel">
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i data-lucide="pen-line"></i>
+                                Content Brief
+                            </h3>
+
+                            <div class="form-group">
+                                <label for="f-topic">Topic <span class="required">*</span></label>
+                                <input type="text" id="f-topic"
+                                    placeholder="e.g. The Japanese urban legend of the slit-mouthed woman" />
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="f-tone">Tone</label>
+                                    <select id="f-tone">
+                                        <option value="dark mysterious">🌑 Dark &amp; Mysterious</option>
+                                        <option value="informative" selected>📚 Informative</option>
+                                        <option value="energetic">⚡ Energetic</option>
+                                        <option value="motivational">🔥 Motivational</option>
+                                        <option value="comedic">😂 Comedic</option>
+                                        <option value="suspenseful">😨 Suspenseful</option>
+                                        <option value="educational">🎓 Educational</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="f-duration">Duration (seconds)</label>
+                                    <select id="f-duration">
+                                        <option value="30">30s</option>
+                                        <option value="45" selected>45s</option>
+                                        <option value="60">60s</option>
+                                        <option value="90">90s</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="f-audience">Target Audience <span class="optional">(optional)</span></label>
+                                <input type="text" id="f-audience"
+                                    placeholder="e.g. Gen Z horror lovers, Entrepreneurs 25-35" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="f-goal">Goal <span class="optional">(optional)</span></label>
+                                <input type="text" id="f-goal"
+                                    placeholder="e.g. maximize retention and rewatches, drive profile visits" />
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i data-lucide="zap"></i>
+                                Hook Strategy
+                            </h3>
+                            <div class="hook-grid" id="hook-grid">
+                                <button class="hook-chip active" data-hook="">🎲 Auto (AI Picks)</button>
+                                <button class="hook-chip" data-hook="curiosity gap">🕵️ Curiosity Gap</button>
+                                <button class="hook-chip" data-hook="fear trigger">😱 Fear Trigger</button>
+                                <button class="hook-chip" data-hook="myth bust">💥 Myth Bust</button>
+                                <button class="hook-chip" data-hook="shock stat">📊 Shock Stat</button>
+                                <button class="hook-chip" data-hook="secret reveal">🤫 Secret Reveal</button>
+                                <button class="hook-chip" data-hook="identity challenge">🏆 Identity Challenge</button>
+                                <button class="hook-chip" data-hook="direct callout">📢 Direct Callout</button>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i data-lucide="palette"></i>
+                                Visual Style
+                            </h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="f-template">Template</label>
+                                    <select id="f-template">
+                                        <option value="minimal" selected>Minimal</option>
+                                        <option value="bold">Bold</option>
+                                        <option value="tech">Tech</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="f-font">Font</label>
+                                    <select id="f-font">
+                                        <option value="inter" selected>Inter</option>
+                                        <option value="roboto">Roboto</option>
+                                        <option value="montserrat">Montserrat</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="f-palette">Color Palette</label>
+                                    <select id="f-palette">
+                                        <option value="default" selected>Default</option>
+                                        <option value="cyberpunk">Cyberpunk</option>
+                                        <option value="horror">Horror</option>
+                                        <option value="clean">Clean White</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-generate" id="generate-btn">
+                            <i data-lucide="sparkles"></i>
+                            Generate Video
+                        </button>
+                    </div>
+
+                    <!-- Output Panel -->
+                    <div class="faceless-output-panel">
+                        <!-- Idle State -->
+                        <div class="output-idle" id="output-idle">
+                            <i data-lucide="film"></i>
+                            <h3>Your video will appear here</h3>
+                            <p>Fill in the brief and click <strong>Generate Video</strong> to start</p>
+                            <div class="output-tips">
+                                <div class="tip">
+                                    <i data-lucide="clock"></i>
+                                    <span>Takes ~2 min to generate</span>
+                                </div>
+                                <div class="tip">
+                                    <i data-lucide="cpu"></i>
+                                    <span>Powered by Gemini 2.5 Flash</span>
+                                </div>
+                                <div class="tip">
+                                    <i data-lucide="video"></i>
+                                    <span>Stock footage auto-selected</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Generating State -->
+                        <div class="output-generating hidden" id="output-generating">
+                            <div class="gen-spinner"></div>
+                            <h3 id="gen-status-text">Starting pipeline...</h3>
+                            <div class="gen-progress-bar-bg">
+                                <div class="gen-progress-bar-fill" id="gen-progress-fill"></div>
+                            </div>
+                            <p id="gen-progress-pct" class="gen-pct">0%</p>
+                            <div class="gen-steps">
+                                <div class="gen-step" id="step-script">
+                                    <i data-lucide="pen-line"></i>
+                                    <span>Writing Script</span>
+                                </div>
+                                <div class="gen-step" id="step-assets">
+                                    <i data-lucide="image"></i>
+                                    <span>Fetching Assets</span>
+                                </div>
+                                <div class="gen-step" id="step-voice">
+                                    <i data-lucide="mic"></i>
+                                    <span>Generating Voice</span>
+                                </div>
+                                <div class="gen-step" id="step-render">
+                                    <i data-lucide="film"></i>
+                                    <span>Rendering Video</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Done State -->
+                        <div class="output-done hidden" id="output-done">
+                            <div class="done-icon">🎉</div>
+                            <h3>Video Ready!</h3>
+                            <p id="done-topic-label" class="done-topic"></p>
+                            <div class="done-actions">
+                                <a id="done-open-folder" href="#" class="btn btn-primary" target="_blank">
+                                    <i data-lucide="folder-open"></i>
+                                    Open Folder
+                                </a>
+                                <button class="btn btn-secondary" onclick="resetFacelessForm()">
+                                    <i data-lucide="plus"></i>
+                                    New Video
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error State -->
+                        <div class="output-error hidden" id="output-error">
+                            <div class="error-icon">❌</div>
+                            <h3>Generation Failed</h3>
+                            <p id="error-detail-text" class="error-detail"></p>
+                            <button class="btn btn-secondary" onclick="resetFacelessForm()">
+                                <i data-lucide="rotate-ccw"></i>
+                                Try Again
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </main>
 
     </div>
