@@ -6,16 +6,16 @@ def main():
     load_dotenv()
     print("STARTING PIPELINE...")
     
-    # Run the pipeline with the parameters we've been using
+    # Run the pipeline with the user's specified parameters
     result = faceless_pipeline(
-        topic='The Japanese urban legend of the slit-mouthed woman',
-        tone='dark mysterious',
-        duration=45,
-        template='minimal',
-        audience='Gen Z horror lovers',
-        goal='maximize retention and rewatches',
-        hook_style='curiosity gap',
-        skip_api=True
+        topic='A newly released AI tool that could change how developers work',
+        tone='smart futuristic slightly intense',
+        duration=30,
+        template='tech',
+        audience='tech savvy Gen Z, developers, startup founders',
+        goal='maximize retention and authority positioning',
+        hook_style='shock + curiosity gap',
+        skip_api=False
     )
     
     print(f"\nOUTPUT DIR: {result}")

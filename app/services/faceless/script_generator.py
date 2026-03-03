@@ -1,51 +1,36 @@
 import os
 import json
-import requests
+from openai import OpenAI
 from typing import Dict, Any, Optional
 
-MODEL = "gemini-2.5-flash"
+MODEL = "gpt-4o"
 
-def get_api_key() -> str:
-    api_key = os.environ.get("GOOGLE_API_KEY")
+def get_client() -> OpenAI:
+    api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        raise ValueError("GOOGLE_API_KEY environment variable not set")
-    return api_key
+        raise ValueError("OPENAI_API_KEY environment variable not set")
+    return OpenAI(api_key=api_key)
 
-def _call_gemini_api(prompt: str, temperature: float = 0.7) -> str:
-    """Makes a direct REST call to Gemini using requests to bypass SDK hangs."""
-    api_key = get_api_key()
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={api_key}"
+def _call_openai_api(prompt: str, temperature: float = 0.7) -> str:
+    """Makes a call to OpenAI Chat Completions API with JSON response format."""
+    client = get_client()
     
-    headers = {
-        "Content-Type": "application/json"
-    }
-    
-    payload = {
-        "contents": [{
-            "parts": [{"text": prompt}]
-        }],
-        "generationConfig": {
-            "temperature": temperature,
-            "responseMimeType": "application/json"
-        }
-    }
-    
-    # 60s timeout to prevent hanging forever
     print(f"    📡 Sending request to {MODEL} (this usually takes 10-20 seconds)...")
-    response = requests.post(url, headers=headers, json=payload, timeout=60)
+    response = client.chat.completions.create(
+        model=MODEL,
+        messages=[
+            {"role": "system", "content": "You are a world-class short-form content strategist and scriptwriter. Always respond with valid JSON only."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=temperature,
+        response_format={"type": "json_object"}
+    )
     print("    📥 Response received!")
     
-    if response.status_code != 200:
-        raise ValueError(f"Gemini API returned status {response.status_code}: {response.text}")
-        
-    data = response.json()
-    
-    try:
-        # Extract the text from the response payload
-        text_content = data["candidates"][0]["content"]["parts"][0]["text"]
-        return text_content
-    except (KeyError, IndexError) as e:
-        raise ValueError(f"Unexpected API response structure: {data}") from e
+    content = response.choices[0].message.content
+    if not content:
+        raise ValueError("OpenAI returned empty content")
+    return content
 
 
 # ─── Stage 1: Content Strategy ──────────────────────────────────────────────
@@ -110,7 +95,7 @@ Return ONLY valid raw JSON (no markdown, no explanation):
 
     print("🧠 Stage 1: Generating content strategy...")
 
-    content = _call_gemini_api(prompt, temperature=0.8)
+    content = _call_openai_api(prompt, temperature=0.8)
     content = content.replace("```json", "").replace("```", "").strip()
 
     try:
@@ -179,7 +164,7 @@ Return ONLY valid raw JSON (no markdown, no explanation):
 
     print("✍️  Stage 2: Writing script from strategy...")
 
-    content = _call_gemini_api(prompt, temperature=0.7)
+    content = _call_openai_api(prompt, temperature=0.7)
     content = content.replace("```json", "").replace("```", "").strip()
 
     try:
@@ -202,7 +187,7 @@ def generate_script(
     hook_style: Optional[str] = None
 ) -> Dict[str, Any]:
     """
-    Generates a structured JSON script for a faceless video using a 2-stage Gemini pipeline.
+    Generates a structured JSON script for a faceless video using a 2-stage OpenAI pipeline.
     """
     # Stage 1: Strategy
     strategy = _generate_strategy(topic, tone, target_duration_sec, audience, goal, hook_style)
